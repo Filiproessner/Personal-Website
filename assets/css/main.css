@@ -1,11 +1,7 @@
 @import url(fontawesome-all.min.css);
 @import 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400';
 
-/*
-	Stellar by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
-*/
+
 
 html, body, div, span, applet, object,
 iframe, h1, h2, h3, h4, h5, h6, p, blockquote,
@@ -2343,6 +2339,16 @@ input, select, textarea {
 		border-color: rgba(255, 255, 255, 0.35);
 	}
 
+/* Custom: Größe von <img> in .icon an Font-Awesome-Icons anpassen */
+.icon > img, .icon > .avatar {
+	width: 2em;
+	height: 2em;
+	display: inline-block;
+	object-fit: cover;
+	border-radius: 100%;
+	vertical-align: middle;
+}
+
 		.icon.major:before {
 			border-color: rgba(255, 255, 255, 0.35);
 		}
@@ -3564,6 +3570,8 @@ input, select, textarea {
 			color: #636363;
 		}
 
+
+
 		#main table thead {
 			border-bottom-color: #dddddd;
 		}
@@ -3803,3 +3811,4 @@ input, select, textarea {
   object-fit: cover;
   display: inline-block;
 }
+	
