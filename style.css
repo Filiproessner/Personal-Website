@@ -467,7 +467,7 @@ button {
 /* ===== HERO ===== */
 #hero {
   position: relative;
-  min-height: 100vh;
+  min-height: calc(100vh + 200px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -501,9 +501,9 @@ button {
 }
 
 .hero-avatar-ring {
-  width: 150;
+  width: 150px;
   /* Increased to avoid feeling cramped with contain */
-  height: 400px;
+  height: 300px;
   border-radius: var(--radius-lg);
   padding: 4px;
   background: var(--glass-bg);
