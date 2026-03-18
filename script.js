@@ -30,7 +30,6 @@ function initAll() {
   initScrollReveal();
   initCounters();
   initLanguageBars();
-  initMcEasterEgg();
   initChatInput();
 }
 
@@ -426,14 +425,14 @@ Tools:
   → Git, IntelliJ IDEA, Android Studio, VS Code`,
 
   projects: () => `Projects:
-  [1] ⛏️  Minecraft Mods    — Fabric mods (Java, Mixin, Gradle)
-  [2] 🚀  IOWorks           — AI-native B2B SaaS platform ⭐
-  [3] 📱  Gesture Launcher  — Android shortcut app (Java)
-  [4] 🌙  TuntungTung Sahur — Experimental Android app
-  [5] 📂  FileSorter        — Python file organiser
-  [6] 🔢  Sudoku Generator  — Java puzzle engine
-  [7] 🌐  Web Projects      — Custom sites & freelance
-  [8] 🎬  Content Creation  — Tech & gaming content`,
+  [1] Minecraft Mods    — Fabric mods (Java, Mixin, Gradle)
+  [2] IOWorks           — AI-native B2B SaaS platform ⭐
+  [3] Gesture Launcher  — Android shortcut app (Java)
+  [4] TuntungTung Sahur — Experimental Android app
+  [5] FileSorter        — Python file organiser
+  [6] Sudoku Generator  — Java puzzle engine
+  [7] Web Projects      — Custom sites & freelance
+  [8] Content Creation  — Tech & gaming content`,
 
   experience: () => `Timeline:
   ▶ 2020  Started at Andreas Gymnasium Berlin (grade 5)
@@ -449,28 +448,28 @@ Tools:
           Greece, Romania, Bulgaria, Serbia, Bosnia,
           Montenegro, Albania, N. Macedonia, Malta, Cyprus
   
-  Other:  Turkey 🇹🇷
+  Other:  Turkey
   
   Not yet visited: Iceland, Finland, Russia, UK, Ireland ...`,
 
   languages: () => `Languages:
-  🇩🇪  German   — Native (100%)
-  🇬🇧  English  — Fluent (90%)
-  🇷🇸  Serbian  — Conversational (85%)
-  🇫🇷  French   — Intermediate (55%)
+  German   — Native (100%)
+  English  — Fluent (90%)
+  Serbian  — Conversational (85%)
+  French   — Intermediate (55%)
   
   Also understands: Croatian, Bosnian, Montenegrin
   (closely related to Serbian)`,
 
   contact: () => `Contact:
-  📧  Email:    fipvip.roessner@gmail.com
-  💻  GitHub:   github.com/Filiproessner
-  🧱  Modrinth: modrinth.com/user/Filiproessner
-  📸  Instagram: @f1lip210`,
+  Email:    fipvip.roessner@gmail.com
+  GitHub:   github.com/Filiproessner
+  Modrinth: modrinth.com/user/Filiproessner
+  Instagram: @f1lip210`,
 
   minecraft: () => `> Checking Minecraft session...
 
-  ⛏️  Filip definitely spends too much time in Minecraft.
+  Filip definitely spends too much time in Minecraft.
   Framework: Fabric  |  Language: Java 17+
   Mixin: yes  |  Gradle: yes
   Hours played: [DATA EXPUNGED]
@@ -613,7 +612,7 @@ CONTACT:
 
 PERSONALITY NOTES: Filip is curious, self-taught, passionate about building things, interested in AI, loves Minecraft.
 
-Keep answers concise but informative. Use emoji occasionally to make responses more engaging. If asked something not in the context, say you only know about Filip.`;
+Keep answers concise but informative. If asked something not in the context, say you only know about Filip.`;
 
 const filipKnowledgeLocal = {
   name: 'Filip Roessner',
@@ -625,24 +624,24 @@ function generateLocalResponse(q) {
   if (ql.includes('language') || ql.includes('programming') || ql.includes('skill') || ql.includes('code') || ql.includes('know'))
     return `Filip knows several languages:\n\n• **Java** (advanced) — Minecraft mods, Android, desktop apps\n• **Python** (intermediate) — scripting, automation, FileSorter\n• **JavaScript** (intermediate) — web & SaaS\n• **HTML/CSS** — responsive frontends\n• **MySQL** — databases\n\nModding tools: **Fabric API**, **Mixin**, **Gradle**`;
   if (ql.includes('minecraft') || ql.includes('mod') || ql.includes('fabric'))
-    return `⛏️ Minecraft is one of Filip's biggest passions!\n\nHe creates mods using the **Fabric** framework with **Mixin** for bytecode injection and **Gradle** as the build system — solid, production-level modding workflow.\n\nCheck his Modrinth profile: **modrinth.com/user/Filiproessner**`;
+    return `Minecraft is one of Filip's biggest passions!\n\nHe creates mods using the **Fabric** framework with **Mixin** for bytecode injection and **Gradle** as the build system — solid, production-level modding workflow.\n\nCheck his Modrinth profile: **modrinth.com/user/Filiproessner**`;
   if (ql.includes('project') || ql.includes('built') || ql.includes('made'))
-    return `Filip has built these projects:\n\n⛏️ **Minecraft Mods** (Fabric, Java)\n🚀 **IOWorks** — AI B2B SaaS ⭐\n📱 **Gesture Launcher** — Android\n🌙 **TuntungTung Sahur** — Android (experimental)\n📂 **FileSorter** — Python automation tool\n🔢 **Sudoku Generator** — Java\n🌐 **Web Projects** — freelance/hobby\n\nSee GitHub: github.com/Filiproessner`;
+    return `Filip has built these projects:\n\n**Minecraft Mods** (Fabric, Java)\n**IOWorks** — AI B2B SaaS ⭐\n**Gesture Launcher** — Android\n**TuntungTung Sahur** — Android (experimental)\n**FileSorter** — Python automation tool\n**Sudoku Generator** — Java\n**Web Projects** — freelance/hobby\n\nSee GitHub: github.com/Filiproessner`;
   if (ql.includes('ioworks') || ql.includes('saas') || ql.includes('ai'))
-    return `🚀 **IOWorks** is Filip's featured project — an AI-native B2B SaaS platform for workflow automation.\n\nIt includes: meeting summaries, report generation, requirements translation, and AI-powered team task management. Built with JavaScript and LLM API integrations.`;
+    return `**IOWorks** is Filip's featured project — an AI-native B2B SaaS platform for workflow automation.\n\nIt includes: meeting summaries, report generation, requirements translation, and AI-powered team task management. Built with JavaScript and LLM API integrations.`;
   if (ql.includes('travel') || ql.includes('visit') || ql.includes('countr') || ql.includes('been'))
-    return `🌍 Filip has visited **30+ countries** — almost all of Europe!\n\nIncludes: Germany, France, Spain, Italy, Scandinavia, Eastern Europe (Poland, Czech Republic, Hungary, Croatia, etc.), Balkans (Serbia, Bosnia, Montenegro...), Malta, Cyprus.\n\nOutside Europe: **Turkey** 🇹🇷\n\nThe globe on this page highlights all visited countries in blue!`;
+    return `Filip has visited **30+ countries** — almost all of Europe!\n\nIncludes: Germany, France, Spain, Italy, Scandinavia, Eastern Europe (Poland, Czech Republic, Hungary, Croatia, etc.), Balkans (Serbia, Bosnia, Montenegro...), Malta, Cyprus.\n\nOutside Europe: **Turkey**\n\nThe globe on this page highlights all visited countries in blue!`;
   if (ql.includes('human language') || ql.includes('speak') || ql.includes('linguistic') || ql.includes('german') || ql.includes('english') || ql.includes('french') || ql.includes('serbian'))
-    return `Filip speaks:\n\n🇩🇪 **German** — native\n🇬🇧 **English** — fluent\n🇷🇸 **Serbian** — conversational (also understands Croatian, Bosnian, Montenegrin)\n🇫🇷 **French** — intermediate\n\nCheck the Languages section on this page for the skill bars!`;
+    return `Filip speaks:\n\n**German** — native\n**English** — fluent\n**Serbian** — conversational (also understands Croatian, Bosnian, Montenegrin)\n**French** — intermediate\n\nCheck the Languages section on this page for the skill bars!`;
   if (ql.includes('experience') || ql.includes('work') || ql.includes('internship') || ql.includes('job'))
-    return `Filip's professional experience:\n\n🏦 **Diebold Nixdorf** (2025) — internship at a global banking & retail tech company\n\n⚡ **IO Works** (2026–present) — building an AI-native B2B SaaS platform as developer & co-founder\n\n🎓 **Andreas Gymnasium Berlin** — student since grade 5 (2020), Abitur phase 2026–2028`;
+    return `Filip's professional experience:\n\n**Diebold Nixdorf** (2025) — internship at a global banking & retail tech company\n\n**IO Works** (2026–present) — building an AI-native B2B SaaS platform as developer & co-founder\n\n**Andreas Gymnasium Berlin** — student since grade 5 (2020), Abitur phase 2026–2028`;
   if (ql.includes('contact') || ql.includes('email') || ql.includes('reach') || ql.includes('hire'))
-    return `📧 **Email:** fipvip.roessner@gmail.com\n💻 **GitHub:** github.com/Filiproessner\n🧱 **Modrinth:** modrinth.com/user/Filiproessner\n📸 **Instagram:** @f1lip210\n\nFilip is open to collaborations and interesting projects!`;
+    return `**Email:** fipvip.roessner@gmail.com\n**GitHub:** github.com/Filiproessner\n**Modrinth:** modrinth.com/user/Filiproessner\n**Instagram:** @f1lip210\n\nFilip is open to collaborations and interesting projects!`;
   if (ql.includes('python') || ql.includes('filesorter') || ql.includes('file sorter'))
-    return `🐍 Filip uses **Python** for scripting and automation.\n\n**FileSorter** is one of his Python projects — it automatically organises files into folders based on file type (images, videos, documents, code, etc.). Clean, practical utility scripting.`;
+    return `Filip uses **Python** for scripting and automation.\n\n**FileSorter** is one of his Python projects — it automatically organises files into folders based on file type (images, videos, documents, code, etc.). Clean, practical utility scripting.`;
   if (ql.includes('hello') || ql.includes('hi') || ql.includes('hey'))
-    return `Hey! 👋 I'm Filip's AI assistant. I know all about Filip Roessner — his projects, skills, travel, languages, and experience.\n\nWhat would you like to know?`;
-  return `Here's a quick overview of **Filip Roessner**:\n\n🏙️ Berlin, Germany\n🎓 Andreas Gymnasium Berlin\n💻 Java, Python, JavaScript\n⛏️ Minecraft mod developer (Fabric)\n🚀 Building IOWorks (AI SaaS)\n🌍 30+ countries visited\n🇩🇪🇬🇧🇷🇸🇫🇷 Speaks German, English, Serbian, French\n\nFeel free to ask me anything specific!`;
+    return `Hey! I'm Filip's AI assistant. I know all about Filip Roessner — his projects, skills, travel, languages, and experience.\n\nWhat would you like to know?`;
+  return `Here's a quick overview of **Filip Roessner**:\n\nBerlin, Germany\nAndreas Gymnasium Berlin\nJava, Python, JavaScript\nMinecraft mod developer (Fabric)\nBuilding IOWorks (AI SaaS)\n30+ countries visited\nSpeaks German, English, Serbian, French\n\nFeel free to ask me anything specific!`;
 }
 
 async function callMistralAPI(userMessage) {
@@ -762,21 +761,6 @@ function initChatInput() {
   input.addEventListener('keydown', e => { if (e.key === 'Enter') sendChatMessage(); });
 }
 
-// ===========================
-// MINECRAFT EASTER EGG
-// ===========================
-function initMcEasterEgg() {
-  const block = document.getElementById('mcBlock');
-  if (!block) return;
-  block.addEventListener('click', () => document.getElementById('mcModal')?.classList.add('open'));
-  document.getElementById('mcModal')?.addEventListener('click', function (e) {
-    if (e.target === this) closeMcModal();
-  });
-}
-
-function closeMcModal() {
-  document.getElementById('mcModal')?.classList.remove('open');
-}
 
 // ===========================
 // CV DOWNLOAD (jsPDF)
