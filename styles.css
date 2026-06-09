@@ -87,12 +87,7 @@ ul { list-style: none; }
 .profile-header { padding: 30px; text-align: center; }
 .avatar-container { position: relative; display: inline-block; }
 .avatar { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; }
-.online-status {
-    width: 14px; height: 14px; background: #4CAF50; border-radius: 50%;
-    position: absolute; bottom: 5px; right: 5px;
-    border: 2px solid var(--bg-card);
-    animation: pulse 2s infinite;
-}
+
 @keyframes pulse {
     0% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4); }
     70% { box-shadow: 0 0 0 10px rgba(76, 175, 80, 0); }
@@ -135,7 +130,7 @@ ul { list-style: none; }
 }
 .download-cv { font-size: 12px; color: var(--text-muted); font-weight: 600; }
 .download-cv:hover { color: var(--text-white); }
-.social-icons { display: flex; justify-content: center; gap: 15px; }
+.social-icons { display: flex; justify-content: center; gap: 15px;  }
 .social-icons a { color: var(--text-muted); font-size: 16px; }
 .social-icons a:hover { color: var(--accent); }
 
@@ -147,7 +142,7 @@ ul { list-style: none; }
 
 /* Hero Banner */
 .hero-banner {
-    background: var(--bg-card); border-radius: 6px; padding: 60px 40px; margin-bottom: 30px;
+    background: var(--bg-card); border-radius: 6px; padding: 0px 40px; margin-bottom: 30px;
     display: flex; justify-content: space-between; align-items: center; position: relative;
 }
 .hero-text h1 { color: var(--text-white); font-size: 40px; line-height: 1.2; margin-bottom: 15px; }
@@ -253,4 +248,14 @@ ul { list-style: none; }
     .hero-banner { flex-direction: column; text-align: center; }
     .hero-image { display: none; } /* Versteckt das Bild auf Handy für Platz */
     .stats-row { flex-wrap: wrap; gap: 20px; }
+}
+.profile-image {
+    padding-bottom: 0%;
+    display: block;
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    max-height: 400px;     
+    object-fit: contain;
+    
 }
