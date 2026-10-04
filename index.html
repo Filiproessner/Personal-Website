@@ -1,773 +1,502 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Filip Roessner - Aspiring Software Engineer</title>
-    <meta name="description" content="Portfolio of Filip Roessner, High School Student & Aspiring Software / Backend Engineer based in Berlin, Germany.">
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    
-    <!-- Google Fonts -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0c0c0e">
+    <meta name="description" content="Filip Roessner is a systems and backend developer based in Berlin, Germany.">
+    <title>Filip Roessner — Systems &amp; Backend Developer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind Configuration -->
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        mono: ['JetBrains Mono', 'monospace'],
-                    },
-                    colors: {
-                        slate: {
-                            850: '#151e2e',
-                            900: '#0f172a',
-                            950: '#020617',
-                        },
-                        primary: '#3b82f6',
-                        primaryHover: '#2563eb',
-                    },
-                    animation: {
-                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
-                        'blob': 'blob 10s infinite',
-                    },
-                    keyframes: {
-                        fadeInUp: {
-                            '0%': { opacity: '0', transform: 'translateY(20px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        },
-                        blob: {
-                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
-                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
-                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
-                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            color-scheme: dark;
+            --background: #0c0c0e;
+            --foreground: #f5f5f2;
+            --secondary: #a2a29e;
+            --accent: #ff4c24;
+            --display: 'Manrope', sans-serif;
+            --body: 'DM Sans', sans-serif;
+            --gutter: clamp(1.25rem, 7vw, 8rem);
+            --ease-out: cubic-bezier(.16, 1, .3, 1);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; }
+        html { background: var(--background); scroll-behavior: auto; }
         body {
-            background-color: #0f172a;
-            color: #f8fafc;
+            margin: 0;
             overflow-x: hidden;
+            background: var(--background);
+            color: var(--foreground);
+            font-family: var(--body);
+            -webkit-font-smoothing: antialiased;
         }
-        
-        /* Glassmorphism Utilities */
-        .glass-nav {
-            background: rgba(15, 23, 42, 0.75);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            transition: all 0.3s ease;
-        }
-        
-        .card-glass {
-            background: rgba(30, 41, 59, 0.4);
-            border: 1px solid rgba(255,255,255,0.05);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            transition: all 0.3s ease;
-        }
-        
-        .card-glass:hover {
-            background: rgba(30, 41, 59, 0.6);
-            border-color: rgba(59, 130, 246, 0.25);
-            transform: translateY(-4px);
-            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5);
-        }
+        a { color: inherit; text-decoration: none; }
+        ::selection { color: var(--background); background: var(--foreground); }
+        :focus-visible { outline: 1px solid var(--accent); outline-offset: 6px; }
 
-        /* Timeline specific styles */
-        .timeline-container {
-            position: relative;
-        }
-        .timeline-container::before {
-            content: '';
+        .topbar {
             position: absolute;
-            left: 20px;
+            z-index: 5;
+            inset: 0 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 2rem var(--gutter);
+        }
+        .topbar-name { font: 600 .9rem var(--display); letter-spacing: -.03em; }
+        .topbar-nav { display: flex; gap: clamp(1.4rem, 3.5vw, 3.5rem); color: var(--secondary); font-size: .85rem; }
+        .topbar-nav a, .social-links a { transition: color .3s var(--ease-out); }
+        .topbar-nav a:hover, .social-links a:hover { color: var(--foreground); }
+
+        .hero {
+            display: flex;
+            min-height: 100svh;
+            flex-direction: column;
+            justify-content: center;
+            padding: 8rem var(--gutter) 7rem;
+        }
+        .hero h1 {
+            max-width: 1400px;
+            margin: 0 0 clamp(2rem, 5vw, 5rem) -.055em;
+            font: 700 clamp(4.3rem, 13.6vw, 13rem)/.84 var(--display);
+            letter-spacing: -.095em;
+        }
+        .hero h1 span { display: block; }
+        .hero-role {
+            max-width: 650px;
+            margin: 0;
+            color: var(--secondary);
+            font-size: clamp(1.15rem, 2.1vw, 1.8rem);
+            line-height: 1.5;
+        }
+        .hero-role strong { color: var(--foreground); font-weight: 500; }
+
+        .projects {
+            padding: clamp(7rem, 14vw, 14rem) var(--gutter) clamp(8rem, 16vw, 16rem);
+        }
+        .section-title {
+            margin: 0 0 clamp(3rem, 7vw, 7rem);
+            color: var(--secondary);
+            font: 500 .95rem var(--body);
+        }
+        .project-list { display: grid; gap: clamp(3.5rem, 8vw, 8rem); }
+        .project {
+            display: grid;
+            grid-template-columns: minmax(0, 1.05fr) minmax(250px, .8fr);
+            align-items: baseline;
+            gap: clamp(1rem, 6vw, 7rem);
+        }
+        .project:nth-child(even) { grid-template-columns: minmax(250px, .8fr) minmax(0, 1.05fr); }
+        .project:nth-child(even) .project-copy { grid-column: 2; grid-row: 1; }
+        .project:nth-child(even) .project-description { grid-column: 1; grid-row: 1; }
+        .project-title {
+            display: inline-flex;
+            align-items: baseline;
+            gap: .18em;
+            margin: 0;
+            font: 600 clamp(2rem, 5.1vw, 5.3rem)/1.05 var(--display);
+            letter-spacing: -.075em;
+            transition: color .35s var(--ease-out), transform .7s var(--ease-out);
+        }
+        .project-title:hover, .project-title:focus-visible { color: var(--accent); }
+        .project-arrow {
+            display: inline-block;
+            color: var(--accent);
+            font-size: .52em;
+            opacity: 0;
+            transform: translate(-.3em, .18em);
+            transition: opacity .35s var(--ease-out), transform .65s var(--ease-out);
+        }
+        .project-title:hover .project-arrow, .project-title:focus-visible .project-arrow { opacity: 1; transform: translate(0, 0); }
+        .project-description {
+            max-width: 440px;
+            margin: 0;
+            color: var(--secondary);
+            font-size: clamp(.95rem, 1.2vw, 1.08rem);
+            line-height: 1.75;
+        }
+        .project-description strong { color: var(--foreground); font-weight: 500; }
+        .profile-section { padding: 0 var(--gutter) clamp(7rem, 13vw, 13rem); }
+        .profile-block { margin-bottom: clamp(5rem, 10vw, 10rem); }
+        .profile-block:last-child { margin-bottom: 0; }
+        .profile-heading { margin: 0 0 clamp(2.5rem, 5vw, 5rem); color: var(--secondary); font: 500 .95rem var(--body); }
+        .profile-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(2rem, 8vw, 9rem); row-gap: clamp(2.5rem, 5vw, 5rem); }
+        .profile-item h3 { margin: 0 0 .8rem; font: 600 clamp(1.2rem, 2.3vw, 2rem)/1.2 var(--display); letter-spacing: -.05em; }
+        .profile-item p { max-width: 540px; margin: 0; color: var(--secondary); font-size: .98rem; line-height: 1.75; }
+        .profile-item p + p { margin-top: .75rem; }
+        .profile-item strong { color: var(--foreground); font-weight: 500; }
+        .profile-item a { transition: color .3s var(--ease-out); }
+        .profile-item a:hover { color: var(--accent); }
+        .timeline { position: relative; display: grid; gap: clamp(2.5rem, 5vw, 4.5rem); margin: 0; padding: 0; list-style: none; }
+        .timeline::before { position: absolute; top: .45rem; bottom: .55rem; left: 6.1rem; width: 1px; background: rgba(245,245,242,.2); content: ''; }
+        .timeline-entry { position: relative; display: grid; grid-template-columns: 5rem minmax(0, 1fr); column-gap: 2.5rem; align-items: start; }
+        .timeline-entry::before { position: absolute; top: .48rem; left: 5.83rem; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); content: ''; }
+        .timeline-date { margin: 0; color: var(--secondary); font-size: .83rem; line-height: 1.5; }
+        .timeline-entry h3 { margin: 0 0 .65rem; font: 600 clamp(1.2rem, 2.3vw, 2rem)/1.2 var(--display); letter-spacing: -.05em; }
+        .timeline-entry p { max-width: 700px; margin: 0; color: var(--secondary); font-size: .98rem; line-height: 1.75; }
+        .timeline-entry p + p { margin-top: .65rem; }
+        .timeline-entry strong { color: var(--foreground); font-weight: 500; }
+        .network-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; }
+        .network-person { display: grid; justify-items: start; gap: .65rem; }
+        .network-person a { font: 600 clamp(1.25rem, 2.5vw, 2.2rem) var(--display); letter-spacing: -.05em; transition: color .3s var(--ease-out); }
+        .network-person a:hover { color: var(--accent); }
+        .network-person span { color: var(--secondary); font-size: .88rem; }
+        .contact {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: end;
+            gap: 2rem;
+            padding: 0 var(--gutter) clamp(2rem, 4vw, 4rem);
+        }
+        .contact h2 {
+            grid-column: 1 / -1;
+            margin: 0 0 clamp(2rem, 6vw, 6rem);
+            font: 600 clamp(3.5rem, 10vw, 10rem)/.9 var(--display);
+            letter-spacing: -.085em;
+        }
+        .contact-main { display: grid; gap: .7rem; }
+        .contact-label { margin: 0; color: var(--secondary); font-size: .85rem; }
+        .contact-email {
+            display: inline-block;
+            width: fit-content;
+            font: 500 clamp(1.2rem, 2.8vw, 2.7rem) var(--display);
+            letter-spacing: -.055em;
+            transition: color .3s var(--ease-out);
+        }
+        .contact-email:hover { color: var(--accent); }
+        .contact-place { margin: .35rem 0 0; color: var(--secondary); font-size: .9rem; }
+        .social-links { display: flex; gap: clamp(1rem, 2vw, 2rem); padding-bottom: .2rem; color: var(--secondary); font-size: .9rem; }
+        footer { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-top: clamp(4rem, 9vw, 9rem); color: #696965; font-size: .75rem; }
+        footer a { transition: color .3s var(--ease-out); }
+        footer a:hover { color: var(--foreground); }
+        .legal-section { padding-top: 0; }
+        .legal-section .profile-grid { row-gap: 2.5rem; }
+        .legal-section .profile-item h3 { font-size: 1rem; }
+
+        .cursor {
+            position: fixed;
+            z-index: 20;
             top: 0;
-            height: 100%;
-            width: 2px;
-            background: linear-gradient(to bottom, #3b82f6, rgba(59, 130, 246, 0.05));
-        }
-        @media (min-width: 768px) {
-            .timeline-container::before {
-                left: 50%;
-                transform: translateX(-50%);
-            }
-        }
-        
-        .timeline-dot {
-            width: 16px;
-            height: 16px;
-            background-color: #3b82f6;
-            border: 3px solid #0f172a;
+            left: 0;
+            width: 11px;
+            height: 11px;
+            border: 1px solid var(--accent);
             border-radius: 50%;
-            position: absolute;
-            left: 21px;
-            transform: translateX(-50%);
-            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
-            z-index: 10;
+            background: var(--accent);
+            pointer-events: none;
+            opacity: 0;
+            mix-blend-mode: difference;
+            transform: translate(-50%, -50%);
+            transition: width .35s var(--ease-out), height .35s var(--ease-out), background .35s ease, opacity .2s ease;
         }
-        @media (min-width: 768px) {
-            .timeline-dot {
-                left: 50%;
-            }
-        }
+        .cursor.is-visible { opacity: 1; }
+        .cursor.is-active { width: 42px; height: 42px; background: transparent; }
+        .skip-link { position: fixed; z-index: 30; top: 1rem; left: 1rem; padding: .8rem 1rem; background: var(--foreground); color: var(--background); transform: translateY(-150%); }
+        .skip-link:focus { transform: translateY(0); }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
+        @media (hover: hover) and (pointer: fine) { body, body * { cursor: none !important; } }
+        @media (max-width: 700px) {
+            .topbar { padding-top: 1.4rem; }
+            .hero { min-height: 74svh; padding: 6.5rem var(--gutter) 5rem; }
+            .hero h1 { margin-bottom: 1.7rem; font-size: clamp(3.8rem, 15.5vw, 7rem); }
+            .hero-role { font-size: 1rem; line-height: 1.45; }
+            .projects { padding: 5rem var(--gutter) 6rem; }
+            .section-title { margin-bottom: 2.5rem; }
+            .project-list { gap: 2.8rem; }
+            .project, .project:nth-child(even) { grid-template-columns: 1fr; gap: .75rem; }
+            .project:nth-child(even) .project-copy, .project:nth-child(even) .project-description { grid-column: 1; grid-row: auto; }
+            .project-title { font-size: clamp(1.9rem, 8vw, 3.6rem); }
+            .project-description { max-width: 540px; font-size: .92rem; line-height: 1.6; }
+            .profile-section { padding-bottom: 4.5rem; }
+            .profile-block { margin-bottom: 4.5rem; }
+            .profile-heading { margin-bottom: 2rem; }
+            .profile-grid { row-gap: 1.8rem; }
+            .profile-item h3 { margin-bottom: .55rem; font-size: 1.15rem; }
+            .profile-item p { font-size: .9rem; line-height: 1.6; }
+            .profile-item p + p { margin-top: .5rem; }
+            #languages .profile-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 1.2rem; row-gap: 1.3rem; }
+            .timeline { gap: 1.8rem; }
+            .timeline::before { left: 3px; }
+            .timeline-entry { grid-template-columns: minmax(0, 1fr); gap: .45rem; padding-left: 1.6rem; }
+            .timeline-entry::before { left: 0; }
+            .timeline-entry h3 { margin-bottom: .45rem; font-size: 1.15rem; }
+            .timeline-entry p { font-size: .9rem; line-height: 1.6; }
+            .network-list { grid-template-columns: 1fr; gap: 1.3rem; }
+            .contact { grid-template-columns: 1fr; align-items: start; gap: 1.3rem; }
+            .contact h2 { grid-column: 1; }
+            .contact h2 { margin-bottom: 2rem; font-size: clamp(3rem, 9vw, 5rem); }
+            .social-links { grid-row: auto; flex-wrap: wrap; }
+            footer { margin-top: 3rem; }
+            .legal-section .profile-grid { grid-template-columns: 1fr; row-gap: 1.5rem; }
+            footer { grid-column: 1; }
         }
-        ::-webkit-scrollbar-track {
-            background: #0f172a;
+        @media (max-width: 420px) {
+            .topbar-name, .topbar-nav { font-size: .78rem; }
+            .topbar-nav { gap: 1rem; }
+            .hero h1 { font-size: 16.8vw; }
+            .contact-email { font-size: clamp(1.1rem, 6vw, 1.6rem); }
         }
-        ::-webkit-scrollbar-thumb {
-            background: #334155;
-            border-radius: 4px;
+        @media (max-width: 360px) {
+            .topbar-name { display: none; }
+            .topbar-nav { width: 100%; justify-content: space-between; gap: .45rem; font-size: .69rem; }
         }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #475569;
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
         }
     </style>
 </head>
-<body class="font-sans antialiased selection:bg-primary selection:text-white">
-
-    <!-- Ambient Background Effects -->
-    <div class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
-        <div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-blue-600 rounded-full mix-blend-screen filter blur-[150px] opacity-20 animate-blob"></div>
-        <div class="absolute top-[20%] right-[-10%] w-96 h-96 bg-purple-600 rounded-full mix-blend-screen filter blur-[150px] opacity-20 animate-blob" style="animation-delay: 2s;"></div>
-        <div class="absolute bottom-[-10%] left-[20%] w-96 h-96 bg-indigo-600 rounded-full mix-blend-screen filter blur-[150px] opacity-20 animate-blob" style="animation-delay: 4s;"></div>
-    </div>
-
-    <!-- Navigation Bar -->
-    <header id="header" class="fixed top-0 w-full z-50 glass-nav">
-        <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
-            <a href="#" class="text-xl font-bold tracking-tight text-white flex items-center gap-2 group">
-                <i data-lucide="terminal-square" class="text-primary w-6 h-6 group-hover:rotate-12 transition-transform"></i>
-                Filip<span class="text-slate-400">Roessner</span>
-            </a>
-            
-            <!-- Desktop Navigation -->
-            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
-                <a href="#about" class="hover:text-white transition-colors">About</a>
-                <a href="#skills" class="hover:text-white transition-colors">Skills</a>
-                <a href="#projects" class="hover:text-white transition-colors">Projects</a>
-                <a href="#education" class="hover:text-white transition-colors">Education</a>
-                <a href="#contact" class="px-5 py-2.5 bg-primary/10 text-primary border border-primary/20 rounded-lg hover:bg-primary hover:text-white hover:border-primary transition-all shadow-sm">Let's Talk</a>
-            </nav>
-
-            <!-- Mobile Menu Toggle Button -->
-            <button class="md:hidden text-slate-300 hover:text-white focus:outline-none" id="mobile-menu-btn" aria-label="Toggle menu">
-                <i data-lucide="menu" class="w-6 h-6" id="menu-icon"></i>
-            </button>
-        </div>
-        
-        <!-- Mobile Navigation Dropdown -->
-        <div class="md:hidden hidden bg-slate-900/95 backdrop-blur-xl border-b border-slate-800 absolute w-full shadow-2xl" id="mobile-menu">
-            <nav class="flex flex-col px-6 py-4 gap-4 text-sm font-medium text-slate-300">
-                <a href="#about" class="hover:text-white transition-colors mobile-link block py-2">About</a>
-                <a href="#skills" class="hover:text-white transition-colors mobile-link block py-2">Skills</a>
-                <a href="#projects" class="hover:text-white transition-colors mobile-link block py-2">Projects</a>
-                <a href="#education" class="hover:text-white transition-colors mobile-link block py-2">Education</a>
-                <a href="#contact" class="text-primary mobile-link block py-2 font-semibold">Let's Talk</a>
-            </nav>
-        </div>
+<body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="cursor" aria-hidden="true"></div>
+    <header class="topbar">
+        <a class="topbar-name magnetic" href="#top">Filip Roessner</a>
+        <nav class="topbar-nav" aria-label="Main navigation">
+            <a class="magnetic" href="#projects">Projects</a>
+            <a class="magnetic" href="#profile">Profile</a>
+            <a class="magnetic" href="#skills">Skills</a>
+            <a class="magnetic" href="#network">Network</a>
+            <a class="magnetic" href="#contact">Contact</a>
+        </nav>
     </header>
+    <main id="main">
+        <section class="hero" id="top" aria-labelledby="name">
+            <h1 id="name"><span>Filip</span><span>Roessner</span></h1>
+            <p class="hero-role"><strong>Student Developer · Systems &amp; Backend Engineering Aspirant</strong><br>Berlin, Germany (CET / CEST)</p>
+        </section>
 
-    <!-- Hero Section -->
-    <section id="hero" class="relative pt-32 pb-20 md:pt-48 md:pb-32 px-6 max-w-6xl mx-auto flex flex-col justify-center min-h-[95vh]">
-        <div class="max-w-4xl animate-fade-in-up">
-            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-800/50 border border-slate-700/50 text-xs font-semibold text-primary mb-8 backdrop-blur-sm">
-                <span class="relative flex h-2 w-2">
-                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                  <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-                </span>
-                Available for opportunities • Berlin, Germany
+        <section class="projects" id="projects" aria-labelledby="projects-title">
+            <h2 class="section-title" id="projects-title">Projects</h2>
+            <div class="project-list">
+                <article class="project">
+                    <div class="project-copy">
+                        <h3><a class="project-title magnetic" href="https://ioworks.vercel.app" target="_blank" rel="noreferrer">IO Works<span class="project-arrow" aria-hidden="true">↗</span></a></h3>
+                    </div>
+                    <p class="project-description">Custom software and core system solutions built around <strong>structural reliability, modular data handling, and robust backend logic</strong>. Java, Kotlin, and REST APIs.</p>
+                </article>
+                <article class="project">
+                    <div class="project-copy">
+                        <h3><a class="project-title magnetic" href="https://www.curseforge.com/members/fipvip/projects" target="_blank" rel="noreferrer">Minecraft Performance &amp; Utility Mods<span class="project-arrow" aria-hidden="true">↗</span></a></h3>
+                    </div>
+                    <p class="project-description"><strong>Auto-Shieldbreaker</strong> and <strong>OmniPerf</strong>, published for Minecraft 1.21+. Mixin-driven bytecode injection supports client/server tick optimizations and combat interaction mechanics. Fabric API, Java, Bytecode Mixins, and Mojang Mappings.</p>
+                </article>
+                <article class="project">
+                    <div class="project-copy">
+                        <h3><a class="project-title magnetic" href="https://github.com/Filiproessner" target="_blank" rel="noreferrer">Scalable Backend Microservices<span class="project-arrow" aria-hidden="true">↗</span></a></h3>
+                    </div>
+                    <p class="project-description">Scalable Java and Kotlin backend microservices, high-performance object-oriented architecture, clean RESTful API endpoints, and modular design developed through Computer Science coursework and personal builds. Spring Boot, OOP, and Git.</p>
+                </article>
+                <article class="project">
+                    <div class="project-copy">
+                        <h3><a class="project-title magnetic" href="https://github.com/Filiproessner" target="_blank" rel="noreferrer">Hardware &amp; Automation<span class="project-arrow" aria-hidden="true">↗</span></a></h3>
+                    </div>
+                    <p class="project-description">Custom AutoHotkey scripts for precision input sequences and desktop workflows, paired with self-hosted Raspberry Pi system-monitoring dashboards. Linux and Dashy.</p>
+                </article>
             </div>
-            
-            <h1 class="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-white mb-6 leading-[1.05]">
-                High School Student & <br/>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400">Backend Engineer</span>
-            </h1>
-            
-            <p class="text-lg md:text-xl text-slate-400 mb-10 max-w-2xl leading-relaxed font-light">
-                Specializing in Mathematics & Computer Science. Passionate about building robust systems, Java performance optimization, and crafting interactive modern web experiences.
-            </p>
-            
-            <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                <a href="#contact" class="w-full sm:w-auto inline-flex justify-center items-center gap-2 px-7 py-3.5 bg-primary text-white font-medium rounded-lg hover:bg-primaryHover hover:-translate-y-0.5 transition-all shadow-[0_0_20px_rgba(59,130,246,0.3)]">
-                    <i data-lucide="mail" class="w-5 h-5"></i> Contact Me
-                </a>
-                <a href="#projects" class="w-full sm:w-auto inline-flex justify-center items-center gap-2 px-7 py-3.5 bg-slate-800/80 text-white font-medium rounded-lg border border-slate-700 hover:bg-slate-700 hover:-translate-y-0.5 transition-all">
-                    View Projects <i data-lucide="arrow-right" class="w-5 h-5"></i>
-                </a>
-            </div>
-            
-            <div class="mt-16 pt-8 border-t border-slate-800/50 flex flex-wrap gap-3 items-center">
-                <span class="text-sm text-slate-500 mr-2 font-medium uppercase tracking-wider">Core Stack:</span>
-                <span class="px-3 py-1.5 bg-slate-800/40 border border-slate-700/50 rounded-md text-xs text-slate-300 font-mono flex items-center gap-1.5"><i data-lucide="code" class="w-3.5 h-3.5 text-blue-400"></i> Java</span>
-                <span class="px-3 py-1.5 bg-slate-800/40 border border-slate-700/50 rounded-md text-xs text-slate-300 font-mono flex items-center gap-1.5"><i data-lucide="code" class="w-3.5 h-3.5 text-purple-400"></i> Kotlin</span>
-                <span class="px-3 py-1.5 bg-slate-800/40 border border-slate-700/50 rounded-md text-xs text-slate-300 font-mono flex items-center gap-1.5"><i data-lucide="server" class="w-3.5 h-3.5 text-green-400"></i> Spring Boot</span>
-                <span class="px-3 py-1.5 bg-slate-800/40 border border-slate-700/50 rounded-md text-xs text-slate-300 font-mono flex items-center gap-1.5"><i data-lucide="layout" class="w-3.5 h-3.5 text-cyan-400"></i> React</span>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- About Section -->
-    <section id="about" class="py-24 bg-slate-900/30 border-y border-slate-800/50 relative">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="grid lg:grid-cols-2 gap-16 items-center">
-                <div>
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="h-[1px] w-8 bg-primary"></div>
-                        <h2 class="text-sm font-bold tracking-widest text-primary uppercase">About Me</h2>
-                    </div>
-                    <h3 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-8 leading-tight">Engineering logic into <span class="text-slate-400">elegant solutions.</span></h3>
-                    
-                    <div class="space-y-6 text-slate-400 font-light leading-relaxed text-lg">
-                        <p>
-                            I am a high school student in the Oberstufe (Abitur Track) enrolled in the <strong class="text-slate-200 font-medium">MINT specialization track</strong> at Andreas-Gymnasium, Berlin. My academic focus is heavily rooted in advanced Mathematics and Computer Science (Spezialleistungskurs Mathematik).
-                        </p>
-                        <p>
-                            I believe in building a strong foundational understanding of computer systems. While I have experience crafting full-stack web applications, my true passion lies in <strong class="text-slate-200 font-medium">backend architecture, object-oriented design, and performance optimization</strong>—which I actively apply through Java byte-code manipulation in Minecraft modding.
-                        </p>
-                        <p>
-                            Whether I am scripting hardware automations with AutoHotkey, configuring self-hosted Linux environments on a Raspberry Pi, or developing Spring Boot REST APIs, I am constantly exploring the mechanics of software engineering.
-                        </p>
-                    </div>
-                </div>
-                
-                <div class="grid grid-cols-2 gap-4 lg:gap-6 relative">
-                    <!-- Decorative background element -->
-                    <div class="absolute inset-0 bg-gradient-to-tr from-blue-500/5 to-purple-500/5 rounded-3xl -m-4 border border-slate-800/50 -z-10"></div>
-                    
-                    <div class="card-glass p-8 rounded-2xl flex flex-col items-center justify-center text-center">
-                        <div class="w-14 h-14 bg-blue-500/10 rounded-full flex items-center justify-center mb-4">
-                            <i data-lucide="braces" class="w-6 h-6 text-blue-400"></i>
-                        </div>
-                        <span class="text-xl font-bold text-white">Java/Kotlin</span>
-                        <span class="text-sm text-slate-400 mt-1">Backend Core</span>
-                    </div>
-                    
-                    <div class="card-glass p-8 rounded-2xl flex flex-col items-center justify-center text-center lg:translate-y-12">
-                        <div class="w-14 h-14 bg-purple-500/10 rounded-full flex items-center justify-center mb-4">
-                            <i data-lucide="calculator" class="w-6 h-6 text-purple-400"></i>
-                        </div>
-                        <span class="text-xl font-bold text-white">Algorithms</span>
-                        <span class="text-sm text-slate-400 mt-1">Math & Logic</span>
-                    </div>
-                    
-                    <div class="card-glass p-8 rounded-2xl flex flex-col items-center justify-center text-center">
-                        <div class="w-14 h-14 bg-teal-500/10 rounded-full flex items-center justify-center mb-4">
-                            <i data-lucide="layout-template" class="w-6 h-6 text-teal-400"></i>
-                        </div>
-                        <span class="text-xl font-bold text-white">React UI</span>
-                        <span class="text-sm text-slate-400 mt-1">Modern Web</span>
-                    </div>
-                    
-                    <div class="card-glass p-8 rounded-2xl flex flex-col items-center justify-center text-center lg:translate-y-12">
-                        <div class="w-14 h-14 bg-rose-500/10 rounded-full flex items-center justify-center mb-4">
-                            <i data-lucide="server" class="w-6 h-6 text-rose-400"></i>
-                        </div>
-                        <span class="text-xl font-bold text-white">Linux/Pi</span>
-                        <span class="text-sm text-slate-400 mt-1">Self-Hosting</span>
-                    </div>
+        <section class="profile-section" id="profile" aria-labelledby="profile-title">
+            <div class="profile-block">
+                <h2 class="profile-heading" id="profile-title">Education &amp; experience</h2>
+                <ol class="timeline">
+                    <li class="timeline-entry">
+                        <p class="timeline-date">Since 5th grade</p>
+                        <div><h3>MINT profile · Andreas-Gymnasium, Berlin</h3><p>Long-term enrollment in the Mathematics, Informatics, Natural Sciences, and Technology profile. Currently in the Oberstufe / Abitur track.</p></div>
+                    </li>
+                    <li class="timeline-entry">
+                        <p class="timeline-date">2021–2026</p>
+                        <div><h3>TUMO Berlin</h3><p>Participant at the Digital Education &amp; Creative Technologies Center, exploring software design, digital workflows, and modern technology applications.</p></div>
+                    </li>
+                    <li class="timeline-entry">
+                        <p class="timeline-date">2025</p>
+                        <div><h3>Diebold Nixdorf · Engineering &amp; IT</h3><p>Specialized high school internship (Schülerpraktikum) with exposure to enterprise hardware, banking and retail systems software, and infrastructure design.</p></div>
+                    </li>
+                    <li class="timeline-entry">
+                        <p class="timeline-date">December 2026</p>
+                        <div><h3>CERN · Geneva, Switzerland</h3><p>Physics and science excursion exploring particle physics and large-scale scientific infrastructure at the European Organization for Nuclear Research.</p></div>
+                    </li>
+                    <li class="timeline-entry">
+                        <p class="timeline-date">Expected 2028</p>
+                        <div><h3>Abitur · Andreas-Gymnasium</h3><p><strong>Spezialleistungskurs Mathematik</strong> — Specialized / Advanced Mathematics Track.</p><p><strong>Leistungskurs Informatik</strong> — Advanced Computer Science Major for Abitur.</p></div>
+                    </li>
+                </ol>
+            </div>
+            <div class="profile-block" id="languages">
+                <h2 class="profile-heading">Languages</h2>
+                <div class="profile-grid">
+                    <div class="profile-item"><h3>German</h3><p>Native</p></div>
+                    <div class="profile-item"><h3>English</h3><p>Advanced · C1–C2. Targeting Cambridge Certification.</p></div>
+                    <div class="profile-item"><h3>French</h3><p>Intermediate · B1.</p></div>
+                    <div class="profile-item"><h3>Serbian</h3><p>Conversational / Native Proficiency.</p></div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Tech Stack & Skills -->
-    <section id="skills" class="py-24 max-w-6xl mx-auto px-6">
-        <div class="text-center mb-16 md:mb-20">
-            <div class="flex items-center justify-center gap-3 mb-4">
-                <div class="h-[1px] w-8 bg-primary"></div>
-                <h2 class="text-sm font-bold tracking-widest text-primary uppercase">Technical Arsenal</h2>
-                <div class="h-[1px] w-8 bg-primary"></div>
-            </div>
-            <h3 class="text-3xl md:text-5xl font-bold text-white">Skills & Technologies</h3>
-        </div>
-        
-        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <!-- Backend -->
-            <div class="card-glass p-8 rounded-2xl group">
-                <div class="w-14 h-14 bg-blue-500/10 rounded-xl flex items-center justify-center mb-8 border border-blue-500/20 group-hover:bg-blue-500/20 transition-colors">
-                    <i data-lucide="server-cog" class="text-blue-400 w-7 h-7"></i>
+        <section class="profile-section" id="skills" aria-labelledby="skills-title">
+            <div class="profile-block">
+                <h2 class="profile-heading" id="skills-title">Technical stack</h2>
+                <div class="profile-grid">
+                    <article class="profile-item">
+                        <h3>Programming languages</h3>
+                        <p><strong>Java</strong> — primary backend language; advanced OOP, systems architecture, and low-level bytecode manipulation.</p>
+                        <p><strong>Kotlin</strong> — modern JVM-based backend development.</p>
+                        <p><strong>JavaScript, HTML5 &amp; CSS3</strong> — DOM manipulation and responsive web development.</p>
+                        <p><strong>AutoHotkey</strong> — precision input automation, desktop macros, and sequence triggering.</p>
+                    </article>
+                    <article class="profile-item">
+                        <h3>Backend &amp; web</h3>
+                        <p>Spring Boot, REST APIs, React, and Tailwind CSS.</p>
+                    </article>
+                    <article class="profile-item">
+                        <h3>Modding &amp; game engineering</h3>
+                        <p>Minecraft Fabric API (1.21+), Mixins (bytecode injection), Mojang Mappings, and IntelliJ IDEA.</p>
+                    </article>
+                    <article class="profile-item">
+                        <h3>Systems &amp; developer tools</h3>
+                        <p>Git, GitHub, Linux, Raspberry Pi, self-hosted Dashy dashboards, and network / REST integration.</p>
+                    </article>
                 </div>
-                <h4 class="text-xl font-bold text-white mb-6">Backend Engineering</h4>
-                <ul class="space-y-4">
-                    <li class="flex items-start gap-3 text-slate-300">
-                        <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
-                        <span class="font-light">Java & Kotlin</span>
-                    </li>
-                    <li class="flex items-start gap-3 text-slate-300">
-                        <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
-                        <span class="font-light">Spring Boot framework</span>
-                    </li>
-                    <li class="flex items-start gap-3 text-slate-300">
-                        <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
-                        <span class="font-light">REST API Integration</span>
-                    </li>
-                    <li class="flex items-start gap-3 text-slate-300">
-                        <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
-                        <span class="font-light">OOP Architecture & Design</span>
-                    </li>
-                </ul>
             </div>
-            
-            <!-- Web -->
-            <div class="card-glass p-8 rounded-2xl group">
-                <div class="w-14 h-14 bg-teal-500/10 rounded-xl flex items-center justify-center mb-8 border border-teal-500/20 group-hover:bg-teal-500/20 transition-colors">
-                    <i data-lucide="globe-2" class="text-teal-400 w-7 h-7"></i>
-                </div>
-                <h4 class="text-xl font-bold text-white mb-6">Frontend & Web</h4>
-                <ul class="space-y-4">
-                    <li class="flex items-start gap-3 text-slate-300">
-                        <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
-                        <span class="font-light">HTML5 & CSS3</span>
-                    </li>
-                    <li class="flex items-start gap-3 text-slate-300">
-                        <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
-                        <span class="font-light">JavaScript (ES6+)</span>
-                    </li>
-                    <li class="flex items-start gap-3 text-slate-300">
-                        <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
-                        <span class="font-light">React Library</span>
-                    </li>
-                    <li class="flex items-start gap-3 text-slate-300">
-                        <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
-                        <span class="font-light">Tailwind CSS</span>
-                    </li>
-                </ul>
-            </div>
-            
-            <!-- Modding & Tools -->
-            <div class="card-glass p-8 rounded-2xl group">
-                <div class="w-14 h-14 bg-purple-500/10 rounded-xl flex items-center justify-center mb-8 border border-purple-500/20 group-hover:bg-purple-500/20 transition-colors">
-                    <i data-lucide="wrench" class="text-purple-400 w-7 h-7"></i>
-                </div>
-                <h4 class="text-xl font-bold text-white mb-6">Modding & Tooling</h4>
-                <ul class="space-y-4">
-                    <li class="flex items-start gap-3 text-slate-300">
-                        <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
-                        <span class="font-light">Fabric API</span>
-                    </li>
-                    <li class="flex items-start gap-3 text-slate-300">
-                        <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
-                        <span class="font-light">Mixins & Mojang Mappings</span>
-                    </li>
-                    <li class="flex items-start gap-3 text-slate-300">
-                        <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
-                        <span class="font-light">Git & GitHub VC</span>
-                    </li>
-                    <li class="flex items-start gap-3 text-slate-300">
-                        <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
-                        <span class="font-light">IntelliJ IDEA</span>
-                    </li>
-                </ul>
-            </div>
-            
-            <!-- Systems & Automation -->
-            <div class="card-glass p-8 rounded-2xl group">
-                <div class="w-14 h-14 bg-rose-500/10 rounded-xl flex items-center justify-center mb-8 border border-rose-500/20 group-hover:bg-rose-500/20 transition-colors">
-                    <i data-lucide="terminal" class="text-rose-400 w-7 h-7"></i>
-                </div>
-                <h4 class="text-xl font-bold text-white mb-6">Systems & Auto</h4>
-                <ul class="space-y-4">
-                    <li class="flex items-start gap-3 text-slate-300">
-                        <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
-                        <span class="font-light">Linux Environments</span>
-                    </li>
-                    <li class="flex items-start gap-3 text-slate-300">
-                        <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
-                        <span class="font-light">Raspberry Pi</span>
-                    </li>
-                    <li class="flex items-start gap-3 text-slate-300">
-                        <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
-                        <span class="font-light">AutoHotkey (AHK)</span>
-                    </li>
-                    <li class="flex items-start gap-3 text-slate-300">
-                        <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
-                        <span class="font-light">Dashy (Self-hosted)</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Projects Gallery -->
-    <section id="projects" class="py-24 bg-slate-900/40 border-y border-slate-800/50">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-                <div>
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="h-[1px] w-8 bg-primary"></div>
-                        <h2 class="text-sm font-bold tracking-widest text-primary uppercase">Portfolio</h2>
-                    </div>
-                    <h3 class="text-3xl md:text-5xl font-bold text-white">Featured Projects</h3>
+        <section class="profile-section" id="network" aria-labelledby="network-title">
+            <div class="profile-block">
+                <h2 class="profile-heading" id="network-title">Developer network</h2>
+                <div class="network-list">
+                    <div class="network-person"><a class="magnetic" href="https://github.com/Timhongphuc" target="_blank" rel="noreferrer">Tim Seufert (Tim Hong Phuc) ↗</a><span>Developer / Collaborator</span></div>
+                    <div class="network-person"><a class="magnetic" href="https://github.com/karlgrehn" target="_blank" rel="noreferrer">Karl Grehn ↗</a><span>Developer / Collaborator</span></div>
+                    <div class="network-person"><a class="magnetic" href="https://github.com/MackRichard" target="_blank" rel="noreferrer">Richard Mack ↗</a><span>Developer / Collaborator</span></div>
                 </div>
-                <a href="https://github.com/Filiproessner" target="_blank" class="inline-flex items-center gap-2 text-sm font-medium text-slate-400 hover:text-white transition-colors pb-2 border-b border-transparent hover:border-slate-400">
-                    View full GitHub <i data-lucide="external-link" class="w-4 h-4"></i>
-                </a>
             </div>
+        </section>
 
-            <div class="grid md:grid-cols-2 gap-8">
-                <!-- Project 1: Minecraft Mods -->
-                <div class="card-glass rounded-2xl overflow-hidden group flex flex-col h-full border border-slate-700/50 hover:border-blue-500/50">
-                    <div class="h-56 bg-slate-800 relative overflow-hidden flex items-center justify-center border-b border-slate-700/50">
-                        <div class="absolute inset-0 bg-gradient-to-br from-blue-900/40 to-slate-900 z-10 transition-opacity group-hover:opacity-80"></div>
+        <section class="contact" id="contact" aria-labelledby="contact-title">
+            <h2 id="contact-title">Let’s talk.</h2>
+            <div class="contact-main">
+                <p class="contact-label">Email</p>
+                <a class="contact-email magnetic" href="mailto:filip.roessner@gmail.com">filip.roessner@gmail.com</a>
+                <p class="contact-place">Berlin, Germany (CET)</p>
+            </div>
+            <nav class="social-links" aria-label="Profiles">
+                <a class="magnetic" href="https://github.com/Filiproessner" target="_blank" rel="noreferrer">GitHub ↗</a>
+                <a class="magnetic" href="https://www.curseforge.com/members/fipvip/projects" target="_blank" rel="noreferrer">CurseForge ↗</a>
+                <a class="magnetic" href="https://modrinth.com/user/fipvip.roessner" target="_blank" rel="noreferrer">Modrinth ↗</a>
+            </nav>
+            <footer><span>© <span id="year"></span> Filip Roessner</span><a class="magnetic" href="#impressum">Impressum</a></footer>
+        </section>
+        <section class="profile-section legal-section" id="impressum" aria-labelledby="impressum-title">
+            <div class="profile-block">
+                <h2 class="profile-heading" id="impressum-title">Impressum</h2>
+                <div class="profile-grid">
+                    <div class="profile-item">
                         
-                        <!-- Abstract placeholder background -->
-                        <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(#3b82f6 1px, transparent 1px); background-size: 20px 20px;"></div>
-                        
-                        <div class="relative z-20 transform group-hover:scale-110 transition-transform duration-500">
-                            <i data-lucide="swords" class="w-20 h-20 text-blue-400 drop-shadow-[0_0_15px_rgba(59,130,246,0.5)]"></i>
-                        </div>
+                        <p><strong>Filip Roessner</strong></p>
+                        <p>Kinizgstraße 15<br>10245 Berlin, Deutschland</p>
                     </div>
-                    
-                    <div class="p-8 flex flex-col flex-grow">
-                        <div class="flex flex-wrap gap-2 mb-5">
-                            <span class="text-xs font-mono px-3 py-1 rounded-md bg-blue-500/10 text-blue-400 border border-blue-500/20">Java</span>
-                            <span class="text-xs font-mono px-3 py-1 rounded-md bg-slate-800 text-slate-300 border border-slate-700">Fabric API</span>
-                            <span class="text-xs font-mono px-3 py-1 rounded-md bg-slate-800 text-slate-300 border border-slate-700">Mixins</span>
-                        </div>
-                        <h4 class="text-2xl font-bold text-white mb-4 group-hover:text-blue-400 transition-colors">Auto-Shieldbreaker & OmniPerf</h4>
-                        <p class="text-slate-400 font-light mb-8 flex-grow leading-relaxed text-[15px]">
-                            Performance and utility modifications for Minecraft 1.21+ published on CurseForge. Implemented advanced Java byte-code manipulation utilizing Mixins and Mojang mappings to optimize performance algorithms and significantly enhance gameplay mechanics.
-                        </p>
-                        <div class="mt-auto pt-6 border-t border-slate-800/50 flex justify-between items-center">
-                            <a href="#" class="inline-flex items-center gap-2 text-sm font-semibold text-white hover:text-primary transition-colors">
-                                View on CurseForge <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-                            </a>
-                        </div>
+                    <div class="profile-item">
+                        <h3>Kontakt</h3>
+                        <p>E-Mail: <a href="mailto:filip.roessner@gmail.com">filip.roessner@gmail.com</a></p>
+                        <p>Telefon: <a href="tel:+4915140362110">+4915140362110</a></p>
                     </div>
-                </div>
-
-                <!-- Project 2: Backend -->
-                <div class="card-glass rounded-2xl overflow-hidden group flex flex-col h-full border border-slate-700/50 hover:border-green-500/50">
-                    <div class="h-56 bg-slate-800 relative overflow-hidden flex items-center justify-center border-b border-slate-700/50">
-                        <div class="absolute inset-0 bg-gradient-to-br from-green-900/40 to-slate-900 z-10 transition-opacity group-hover:opacity-80"></div>
-                        <div class="absolute inset-0 opacity-20" style="background-image: repeating-linear-gradient(45deg, #10b981 0, #10b981 1px, transparent 0, transparent 50%); background-size: 20px 20px;"></div>
-                        
-                        <div class="relative z-20 transform group-hover:scale-110 transition-transform duration-500">
-                            <i data-lucide="database" class="w-20 h-20 text-green-400 drop-shadow-[0_0_15px_rgba(16,185,129,0.5)]"></i>
-                        </div>
-                    </div>
-                    
-                    <div class="p-8 flex flex-col flex-grow">
-                        <div class="flex flex-wrap gap-2 mb-5">
-                            <span class="text-xs font-mono px-3 py-1 rounded-md bg-green-500/10 text-green-400 border border-green-500/20">Spring Boot</span>
-                            <span class="text-xs font-mono px-3 py-1 rounded-md bg-slate-800 text-slate-300 border border-slate-700">Java/Kotlin</span>
-                            <span class="text-xs font-mono px-3 py-1 rounded-md bg-slate-800 text-slate-300 border border-slate-700">REST API</span>
-                        </div>
-                        <h4 class="text-2xl font-bold text-white mb-4 group-hover:text-green-400 transition-colors">Backend Systems & APIs</h4>
-                        <p class="text-slate-400 font-light mb-8 flex-grow leading-relaxed text-[15px]">
-                            Designed and implemented clean, scalable Object-Oriented applications. Built robust custom REST API integrations and backend services using Spring Boot as part of advanced Computer Science coursework and personal exploration.
-                        </p>
-                        <div class="mt-auto pt-6 border-t border-slate-800/50 flex justify-between items-center">
-                            <a href="#" class="inline-flex items-center gap-2 text-sm font-semibold text-white hover:text-green-400 transition-colors">
-                                View Source <i data-lucide="github" class="w-4 h-4"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 3: Hardware -->
-                <div class="card-glass rounded-2xl overflow-hidden group flex flex-col h-full border border-slate-700/50 hover:border-rose-500/50">
-                    <div class="h-56 bg-slate-800 relative overflow-hidden flex items-center justify-center border-b border-slate-700/50">
-                        <div class="absolute inset-0 bg-gradient-to-br from-rose-900/40 to-slate-900 z-10 transition-opacity group-hover:opacity-80"></div>
-                        <div class="absolute inset-0 opacity-20" style="background-image: linear-gradient(#f43f5e 1px, transparent 1px), linear-gradient(90deg, #f43f5e 1px, transparent 1px); background-size: 30px 30px;"></div>
-                        
-                        <div class="relative z-20 transform group-hover:scale-110 transition-transform duration-500">
-                            <i data-lucide="cpu" class="w-20 h-20 text-rose-400 drop-shadow-[0_0_15px_rgba(244,63,94,0.5)]"></i>
-                        </div>
-                    </div>
-                    
-                    <div class="p-8 flex flex-col flex-grow">
-                        <div class="flex flex-wrap gap-2 mb-5">
-                            <span class="text-xs font-mono px-3 py-1 rounded-md bg-rose-500/10 text-rose-400 border border-rose-500/20">Raspberry Pi</span>
-                            <span class="text-xs font-mono px-3 py-1 rounded-md bg-slate-800 text-slate-300 border border-slate-700">AHK</span>
-                            <span class="text-xs font-mono px-3 py-1 rounded-md bg-slate-800 text-slate-300 border border-slate-700">Dashy</span>
-                        </div>
-                        <h4 class="text-2xl font-bold text-white mb-4 group-hover:text-rose-400 transition-colors">Hardware & Automations</h4>
-                        <p class="text-slate-400 font-light mb-8 flex-grow leading-relaxed text-[15px]">
-                            Automated complex workflow scripts utilizing AutoHotkey (AHK) for precision input sequences. Configured and self-hosted interactive Raspberry Pi system metrics and weather dashboards using Dashy on a Linux environment.
-                        </p>
-                        <div class="mt-auto pt-6 border-t border-slate-800/50 flex justify-between items-center">
-                            <a href="#" class="inline-flex items-center gap-2 text-sm font-semibold text-white hover:text-rose-400 transition-colors">
-                                Read Details <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 4: Web -->
-                <div class="card-glass rounded-2xl overflow-hidden group flex flex-col h-full border border-slate-700/50 hover:border-cyan-500/50">
-                    <div class="h-56 bg-slate-800 relative overflow-hidden flex items-center justify-center border-b border-slate-700/50">
-                        <div class="absolute inset-0 bg-gradient-to-br from-cyan-900/40 to-slate-900 z-10 transition-opacity group-hover:opacity-80"></div>
-                        <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at center, #06b6d4 2px, transparent 2px); background-size: 24px 24px;"></div>
-                        
-                        <div class="relative z-20 transform group-hover:scale-110 transition-transform duration-500">
-                            <i data-lucide="layout-dashboard" class="w-20 h-20 text-cyan-400 drop-shadow-[0_0_15px_rgba(6,182,212,0.5)]"></i>
-                        </div>
-                    </div>
-                    
-                    <div class="p-8 flex flex-col flex-grow">
-                        <div class="flex flex-wrap gap-2 mb-5">
-                            <span class="text-xs font-mono px-3 py-1 rounded-md bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">React</span>
-                            <span class="text-xs font-mono px-3 py-1 rounded-md bg-slate-800 text-slate-300 border border-slate-700">Tailwind CSS</span>
-                            <span class="text-xs font-mono px-3 py-1 rounded-md bg-slate-800 text-slate-300 border border-slate-700">JS</span>
-                        </div>
-                        <h4 class="text-2xl font-bold text-white mb-4 group-hover:text-cyan-400 transition-colors">Modern Web Interfaces</h4>
-                        <p class="text-slate-400 font-light mb-8 flex-grow leading-relaxed text-[15px]">
-                            Crafted responsive web apps and highly interactive UI templates utilizing React, Tailwind CSS, and vanilla JavaScript. Heavily focused on pixel-perfect layouts, dynamic responsive design, and smooth user micro-interactions.
-                        </p>
-                        <div class="mt-auto pt-6 border-t border-slate-800/50 flex justify-between items-center">
-                            <a href="#" class="inline-flex items-center gap-2 text-sm font-semibold text-white hover:text-cyan-400 transition-colors">
-                                View Demo <i data-lucide="external-link" class="w-4 h-4"></i>
-                            </a>
-                        </div>
+                    <div class="profile-item">
+                        <h3>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h3>
+                        <p>Filip Roessner</p>
+                        <p>Kinizgstraße 15<br>10245 Berlin</p>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
-    <!-- Education Timeline -->
-    <section id="education" class="py-24 max-w-5xl mx-auto px-6">
-        <div class="text-center mb-20">
-            <div class="flex items-center justify-center gap-3 mb-4">
-                <div class="h-[1px] w-8 bg-primary"></div>
-                <h2 class="text-sm font-bold tracking-widest text-primary uppercase">Journey</h2>
-                <div class="h-[1px] w-8 bg-primary"></div>
-            </div>
-            <h3 class="text-3xl md:text-5xl font-bold text-white">Education & Milestones</h3>
-        </div>
-
-        <div class="timeline-container py-8 px-2">
-            
-            <!-- Timeline Item 1: Abitur -->
-            <div class="relative pl-12 md:pl-0 w-full mb-16 flex flex-col md:flex-row items-start md:justify-between group">
-                <div class="timeline-dot top-6 transition-transform group-hover:scale-125 group-hover:bg-blue-400 group-hover:border-blue-900 group-hover:shadow-[0_0_15px_rgba(59,130,246,0.5)] duration-300"></div>
-                <div class="md:w-1/2 md:text-right md:pr-14 mb-4 md:mb-0 pt-5">
-                    <span class="inline-block text-primary font-mono font-semibold tracking-wide bg-primary/10 border border-primary/20 px-4 py-1.5 rounded-lg">Expected 2028</span>
-                </div>
-                <div class="md:w-1/2 md:pl-14">
-                    <div class="card-glass p-8 rounded-2xl relative border-l-4 border-l-primary group-hover:border-l-blue-400 transition-colors">
-                        <h4 class="text-2xl font-bold text-white mb-2">Abitur / Oberstufe</h4>
-                        <div class="flex items-center gap-2 text-primary font-medium mb-4 text-sm">
-                            <i data-lucide="graduation-cap" class="w-4 h-4"></i>
-                            Andreas-Gymnasium, Berlin
-                        </div>
-                        <p class="text-slate-400 font-light text-[15px] leading-relaxed mb-5">
-                            Enrolled in the highly rigorous MINT specialization track focusing on Mathematics, Computer Science, and Natural Sciences. Pursuing the <strong>Spezialleistungskurs Mathematik</strong>.
-                        </p>
-                        <div class="flex flex-wrap gap-2 text-xs font-medium text-slate-300 bg-slate-800/50 rounded-lg p-3 border border-slate-700/50">
-                            <div class="flex items-center gap-1.5 w-full"><i data-lucide="languages" class="w-4 h-4 text-slate-400"></i> Languages:</div>
-                            <span class="px-2 py-1 bg-slate-700/50 rounded">Native German</span>
-                            <span class="px-2 py-1 bg-slate-700/50 rounded">Advanced English (Cambridge C1/C2)</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Timeline Item 2: Modding -->
-            <div class="relative pl-12 md:pl-0 w-full mb-16 flex flex-col md:flex-row-reverse items-start md:justify-between group">
-                <div class="timeline-dot top-6 transition-transform group-hover:scale-125 group-hover:bg-purple-400 group-hover:border-purple-900 group-hover:shadow-[0_0_15px_rgba(168,85,247,0.5)] duration-300"></div>
-                <div class="md:w-1/2 md:text-left md:pl-14 mb-4 md:mb-0 pt-5">
-                    <span class="inline-block text-slate-300 font-mono font-semibold tracking-wide bg-slate-800 border border-slate-700 px-4 py-1.5 rounded-lg">Active Development</span>
-                </div>
-                <div class="md:w-1/2 md:pr-14 md:text-right text-left">
-                    <div class="card-glass p-8 rounded-2xl relative border-l-4 md:border-l-0 md:border-r-4 border-l-purple-500 md:border-r-purple-500 group-hover:border-l-purple-400 md:group-hover:border-r-purple-400 transition-colors">
-                        <h4 class="text-2xl font-bold text-white mb-2">Minecraft Modding</h4>
-                        <div class="flex md:justify-end items-center gap-2 text-purple-400 font-medium mb-4 text-sm">
-                            <i data-lucide="gamepad-2" class="w-4 h-4"></i>
-                            CurseForge Creator
-                        </div>
-                        <p class="text-slate-400 font-light text-[15px] leading-relaxed">
-                            Developing, maintaining, and publishing complex Fabric API mods. Gained deep applied knowledge of Java Byte-code manipulation, Mojang mappings, and open-source version control lifecycle.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Timeline Item 3: Backend & Systems -->
-            <div class="relative pl-12 md:pl-0 w-full flex flex-col md:flex-row items-start md:justify-between group">
-                <div class="timeline-dot top-6 transition-transform group-hover:scale-125 group-hover:bg-teal-400 group-hover:border-teal-900 group-hover:shadow-[0_0_15px_rgba(45,212,191,0.5)] duration-300"></div>
-                <div class="md:w-1/2 md:text-right md:pr-14 mb-4 md:mb-0 pt-5">
-                    <span class="inline-block text-slate-300 font-mono font-semibold tracking-wide bg-slate-800 border border-slate-700 px-4 py-1.5 rounded-lg">Ongoing Pursuit</span>
-                </div>
-                <div class="md:w-1/2 md:pl-14">
-                    <div class="card-glass p-8 rounded-2xl relative border-l-4 border-l-teal-500 group-hover:border-l-teal-400 transition-colors">
-                        <h4 class="text-2xl font-bold text-white mb-2">Backend Architecture</h4>
-                        <div class="flex items-center gap-2 text-teal-400 font-medium mb-4 text-sm">
-                            <i data-lucide="network" class="w-4 h-4"></i>
-                            Self-Taught & Advanced Coursework
-                        </div>
-                        <p class="text-slate-400 font-light text-[15px] leading-relaxed">
-                            Continuous learning in solid Object-Oriented design principles, building scalable Spring Boot REST APIs, and hands-on Linux server management via Raspberry Pi self-hosting solutions.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="py-24 bg-slate-900/60 border-t border-slate-800/50 relative overflow-hidden">
-        <!-- Background Glow -->
-        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-blue-900/20 via-slate-900/0 to-transparent pointer-events-none"></div>
-        
-        <div class="max-w-6xl mx-auto px-6 relative z-10">
-            <div class="grid lg:grid-cols-5 gap-16 lg:gap-8">
-                
-                <div class="lg:col-span-2">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="h-[1px] w-8 bg-primary"></div>
-                        <h2 class="text-sm font-bold tracking-widest text-primary uppercase">Get in Touch</h2>
-                    </div>
-                    <h3 class="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">Let's build <br/><span class="text-slate-400">something great.</span></h3>
-                    <p class="text-slate-400 font-light leading-relaxed mb-12 max-w-md text-lg">
-                        Whether you want to discuss backend architectures, collaborate on a technical project, or just talk code, I'm always open to connecting.
-                    </p>
-                    
-                    <div class="space-y-8">
-                        <div class="flex items-start gap-5 group cursor-default">
-                            <div class="w-14 h-14 rounded-xl bg-slate-800/80 border border-slate-700 flex items-center justify-center shrink-0 group-hover:bg-primary/10 group-hover:border-primary/30 transition-colors shadow-sm">
-                                <i data-lucide="map-pin" class="w-6 h-6 text-slate-300 group-hover:text-primary transition-colors"></i>
-                            </div>
-                            <div class="pt-1">
-                                <p class="text-sm text-slate-500 font-medium tracking-wide uppercase mb-1">Location</p>
-                                <p class="text-white font-medium text-lg">Berlin, Germany</p>
-                            </div>
-                        </div>
-
-                        <a href="https://github.com/Filiproessner" target="_blank" class="flex items-start gap-5 group cursor-pointer w-fit">
-                            <div class="w-14 h-14 rounded-xl bg-slate-800/80 border border-slate-700 flex items-center justify-center shrink-0 group-hover:bg-primary/10 group-hover:border-primary/30 transition-colors shadow-sm">
-                                <i data-lucide="github" class="w-6 h-6 text-slate-300 group-hover:text-primary transition-colors"></i>
-                            </div>
-                            <div class="pt-1">
-                                <p class="text-sm text-slate-500 font-medium tracking-wide uppercase mb-1">GitHub Portfolio</p>
-                                <p class="text-white font-medium text-lg border-b border-transparent group-hover:border-white transition-colors">github.com/Filiproessner</p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Contact Form -->
-                <div class="lg:col-span-3">
-                    <div class="card-glass p-8 md:p-10 rounded-2xl relative shadow-2xl">
-                        <form class="space-y-6" onsubmit="event.preventDefault(); alert('Message sent successfully! (Simulation)');">
-                            <div class="grid sm:grid-cols-2 gap-6">
-                                <div class="space-y-2">
-                                    <label class="text-sm font-medium text-slate-300 ml-1">First Name</label>
-                                    <input type="text" class="w-full bg-slate-900/50 border border-slate-700 rounded-xl px-5 py-4 text-white placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all shadow-inner" placeholder="John" required>
-                                </div>
-                                <div class="space-y-2">
-                                    <label class="text-sm font-medium text-slate-300 ml-1">Last Name</label>
-                                    <input type="text" class="w-full bg-slate-900/50 border border-slate-700 rounded-xl px-5 py-4 text-white placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all shadow-inner" placeholder="Doe" required>
-                                </div>
-                            </div>
-                            <div class="space-y-2">
-                                <label class="text-sm font-medium text-slate-300 ml-1">Email Address</label>
-                                <input type="email" class="w-full bg-slate-900/50 border border-slate-700 rounded-xl px-5 py-4 text-white placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all shadow-inner" placeholder="john@example.com" required>
-                            </div>
-                            <div class="space-y-2">
-                                <label class="text-sm font-medium text-slate-300 ml-1">Your Message</label>
-                                <textarea rows="5" class="w-full bg-slate-900/50 border border-slate-700 rounded-xl px-5 py-4 text-white placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all shadow-inner resize-none" placeholder="Hello Filip, I'd like to discuss..." required></textarea>
-                            </div>
-                            <button type="submit" class="w-full py-4 mt-2 bg-primary hover:bg-primaryHover text-white font-semibold rounded-xl transition-all shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:shadow-[0_0_30px_rgba(59,130,246,0.5)] flex items-center justify-center gap-2 group">
-                                Send Message <i data-lucide="send" class="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
-                            </button>
-                        </form>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="border-t border-slate-800/80 bg-slate-950 py-12 relative z-10">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-8">
-                <div class="flex items-center gap-2 text-xl font-bold tracking-tight text-white">
-                    <i data-lucide="terminal-square" class="text-primary w-6 h-6"></i>
-                    Filip<span class="text-slate-400">Roessner</span>
-                </div>
-                
-                <div class="flex items-center gap-6">
-                    <a href="https://github.com/Filiproessner" target="_blank" class="text-slate-400 hover:text-white transition-colors" aria-label="GitHub">
-                        <i data-lucide="github" class="w-6 h-6"></i>
-                    </a>
-                </div>
-            </div>
-            
-            <div class="border-t border-slate-800/50 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-                <p class="text-slate-500 text-sm font-light">
-                    &copy; <script>document.write(new Date().getFullYear())</script> Filip Roessner. All rights reserved.
-                </p>
-                <p class="text-slate-500 text-sm font-light flex items-center gap-1.5">
-                    Built with <i data-lucide="heart" class="w-3.5 h-3.5 text-rose-500 fill-rose-500/20"></i> in Berlin.
-                </p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js"></script>
     <script>
-        // Initialize Lucide Icons
-        lucide.createIcons();
+        (() => {
+            document.getElementById('year').textContent = new Date().getFullYear();
+            const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-        // Mobile Menu Toggle Logic
-        const btn = document.getElementById('mobile-menu-btn');
-        const menu = document.getElementById('mobile-menu');
-        const links = document.querySelectorAll('.mobile-link');
-        const menuIcon = document.getElementById('menu-icon');
-
-        btn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
-            if (menu.classList.contains('hidden')) {
-                menuIcon.setAttribute('data-lucide', 'menu');
-            } else {
-                menuIcon.setAttribute('data-lucide', 'x');
+            if (!reducedMotion && window.Lenis) {
+                const lenis = new Lenis({ duration: 1.15, smoothWheel: true, wheelMultiplier: .9 });
+                if (window.gsap && window.ScrollTrigger) {
+                    gsap.registerPlugin(ScrollTrigger);
+                    lenis.on('scroll', ScrollTrigger.update);
+                    gsap.ticker.add((time) => lenis.raf(time * 1000));
+                    gsap.ticker.lagSmoothing(0);
+                } else {
+                    const raf = (time) => { lenis.raf(time); requestAnimationFrame(raf); };
+                    requestAnimationFrame(raf);
+                }
             }
-            lucide.createIcons();
-        });
 
-        // Close mobile menu on link click
-        links.forEach(link => {
-            link.addEventListener('click', () => {
-                menu.classList.add('hidden');
-                menuIcon.setAttribute('data-lucide', 'menu');
-                lucide.createIcons();
-            });
-        });
-
-        // Dynamic Glass Nav on Scroll
-        const header = document.getElementById('header');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 20) {
-                header.classList.add('shadow-lg', 'bg-slate-900/85');
-                header.classList.remove('bg-slate-900/75');
-            } else {
-                header.classList.remove('shadow-lg', 'bg-slate-900/85');
-                header.classList.add('bg-slate-900/75');
+            if (!reducedMotion && window.gsap && window.ScrollTrigger) {
+                gsap.registerPlugin(ScrollTrigger);
+                gsap.from('.hero h1 span, .hero-role', {
+                    y: 40,
+                    opacity: 0,
+                    duration: 1.1,
+                    stagger: .12,
+                    ease: 'power4.out',
+                    delay: .1
+                });
+                gsap.utils.toArray('.section-title, .project, .contact h2, .contact-main, .social-links').forEach((element) => {
+                    gsap.from(element, {
+                        y: 28,
+                        opacity: 0,
+                        duration: .9,
+                        ease: 'power3.out',
+                        scrollTrigger: { trigger: element, start: 'top 88%', once: true }
+                    });
+                });
+                gsap.utils.toArray('.project-title').forEach((title) => {
+                    title.addEventListener('pointerenter', () => gsap.to(title, { x: 7, duration: .65, ease: 'elastic.out(1, .55)' }));
+                    title.addEventListener('pointerleave', () => gsap.to(title, { x: 0, duration: .8, ease: 'elastic.out(1, .55)' }));
+                });
             }
-        });
+
+            const cursor = document.querySelector('.cursor');
+            if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+                let pointerX = -100;
+                let pointerY = -100;
+                let cursorX = pointerX;
+                let cursorY = pointerY;
+                let targetX = pointerX;
+                let targetY = pointerY;
+                let hoveredLink = null;
+
+                document.addEventListener('pointermove', (event) => {
+                    pointerX = event.clientX;
+                    pointerY = event.clientY;
+                    cursor.classList.add('is-visible');
+                    const nextLink = document.elementFromPoint(pointerX, pointerY)?.closest('.magnetic');
+                    if (nextLink !== hoveredLink) {
+                        hoveredLink = nextLink;
+                        cursor.classList.toggle('is-active', Boolean(hoveredLink));
+                    }
+                    if (hoveredLink) {
+                        const bounds = hoveredLink.getBoundingClientRect();
+                        const dx = bounds.left + bounds.width / 2 - pointerX;
+                        const dy = bounds.top + bounds.height / 2 - pointerY;
+                        const pull = Math.max(0, 1 - Math.hypot(dx, dy) / 190) * .2;
+                        targetX = pointerX + dx * pull;
+                        targetY = pointerY + dy * pull;
+                    } else {
+                        targetX = pointerX;
+                        targetY = pointerY;
+                    }
+                }, { passive: true });
+
+                document.addEventListener('pointerleave', () => cursor.classList.remove('is-visible'));
+                function followCursor() {
+                    cursorX += (targetX - cursorX) * .18;
+                    cursorY += (targetY - cursorY) * .18;
+                    cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
+                    requestAnimationFrame(followCursor);
+                }
+                followCursor();
+            }
+        })();
     </script>
 </body>
 </html>
