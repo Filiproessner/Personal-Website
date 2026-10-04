@@ -1,261 +1,773 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Filip Roessner - Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,600;0,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-
+    <title>Filip Roessner - Aspiring Software Engineer</title>
+    <meta name="description" content="Portfolio of Filip Roessner, High School Student & Aspiring Software / Backend Engineer based in Berlin, Germany.">
     
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        slate: {
+                            850: '#151e2e',
+                            900: '#0f172a',
+                            950: '#020617',
+                        },
+                        primary: '#3b82f6',
+                        primaryHover: '#2563eb',
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'blob': 'blob 10s infinite',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+        
+        /* Glassmorphism Utilities */
+        .glass-nav {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .card-glass {
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px solid rgba(255,255,255,0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: all 0.3s ease;
+        }
+        
+        .card-glass:hover {
+            background: rgba(30, 41, 59, 0.6);
+            border-color: rgba(59, 130, 246, 0.25);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5);
+        }
 
-    <aside class="sidebar-left">
-        <div class="profile-header">
-            <div class="avatar-container">
-                <img src=".\icons\pfpf.png" alt="Avatar" class="avatar">
-                
-            </div>
-            <h2 class="name">Filip Roessner</h2>
-            <p class="role">High School Student / Modder</p>
+        /* Timeline specific styles */
+        .timeline-container {
+            position: relative;
+        }
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: linear-gradient(to bottom, #3b82f6, rgba(59, 130, 246, 0.05));
+        }
+        @media (min-width: 768px) {
+            .timeline-container::before {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+        
+        .timeline-dot {
+            width: 16px;
+            height: 16px;
+            background-color: #3b82f6;
+            border: 3px solid #0f172a;
+            border-radius: 50%;
+            position: absolute;
+            left: 21px;
+            transform: translateX(-50%);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+            z-index: 10;
+        }
+        @media (min-width: 768px) {
+            .timeline-dot {
+                left: 50%;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased selection:bg-primary selection:text-white">
+
+    <!-- Ambient Background Effects -->
+    <div class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
+        <div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-blue-600 rounded-full mix-blend-screen filter blur-[150px] opacity-20 animate-blob"></div>
+        <div class="absolute top-[20%] right-[-10%] w-96 h-96 bg-purple-600 rounded-full mix-blend-screen filter blur-[150px] opacity-20 animate-blob" style="animation-delay: 2s;"></div>
+        <div class="absolute bottom-[-10%] left-[20%] w-96 h-96 bg-indigo-600 rounded-full mix-blend-screen filter blur-[150px] opacity-20 animate-blob" style="animation-delay: 4s;"></div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <header id="header" class="fixed top-0 w-full z-50 glass-nav">
+        <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="#" class="text-xl font-bold tracking-tight text-white flex items-center gap-2 group">
+                <i data-lucide="terminal-square" class="text-primary w-6 h-6 group-hover:rotate-12 transition-transform"></i>
+                Filip<span class="text-slate-400">Roessner</span>
+            </a>
+            
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+                <a href="#about" class="hover:text-white transition-colors">About</a>
+                <a href="#skills" class="hover:text-white transition-colors">Skills</a>
+                <a href="#projects" class="hover:text-white transition-colors">Projects</a>
+                <a href="#education" class="hover:text-white transition-colors">Education</a>
+                <a href="#contact" class="px-5 py-2.5 bg-primary/10 text-primary border border-primary/20 rounded-lg hover:bg-primary hover:text-white hover:border-primary transition-all shadow-sm">Let's Talk</a>
+            </nav>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button class="md:hidden text-slate-300 hover:text-white focus:outline-none" id="mobile-menu-btn" aria-label="Toggle menu">
+                <i data-lucide="menu" class="w-6 h-6" id="menu-icon"></i>
+            </button>
         </div>
-
-        <div class="profile-content">
-            <div class="info-list">
-                <div class="info-item"><span>Location:</span> <span>Berlin</span></div>
-                <div class="info-item"><span>Age:</span> <span>16</span></div>
-                <div class="info-item"><span>Status:</span> <span class="highlight">On Vacation / Available</span></div>
-            </div>
-
-            <div class="divider"></div>
-
-            <div class="languages">
-                <div class="lang-circle">
-                    <svg viewBox="0 0 36 36" class="circular-chart">
-                        <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                        <path class="circle" stroke-dasharray="100, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                        <text x="18" y="20.35" class="percentage">100%</text>
-                    </svg>
-                    <span class="lang-name">German</span>
-                </div>
-                <div class="lang-circle">
-                    <svg viewBox="0 0 36 36" class="circular-chart">
-                        <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                        <path class="circle" stroke-dasharray="80, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                        <text x="18" y="20.35" class="percentage">80%</text>
-                    </svg>
-                    <span class="lang-name">English</span>
-                </div>
-                <div class="lang-circle">
-                    <svg viewBox="0 0 36 36" class="circular-chart">
-                        <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                        <path class="circle" stroke-dasharray="40, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                        <text x="18" y="20.35" class="percentage">40%</text>
-                    </svg>
-                    <span class="lang-name">French</span>
-                </div>
-                <div class="lang-circle">
-                    <svg viewBox="0 0 36 36" class="circular-chart">
-                        <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                        <path class="circle" stroke-dasharray="90, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                        <text x="18" y="20.35" class="percentage">90%</text>
-                    </svg>
-                    <span class="lang-name">Serbian</span>
-                </div>
-            </div>
-
-            <div class="divider"></div>
-
-            <div class="skills">
-                <div class="skill-item">
-                    <div class="skill-title"><span>Java</span> <span>80%</span></div>
-                    <div class="skill-bar"><div class="skill-fill" style="width: 80%;"></div></div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-title"><span>SQL</span> <span>30%</span></div>
-                    <div class="skill-bar"><div class="skill-fill" style="width: 30%;"></div></div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-title"><span>HTML / CSS</span> <span>95%</span></div>
-                    <div class="skill-bar"><div class="skill-fill" style="width: 95%;"></div></div>
-                </div>
-            </div>
-
-            <div class="divider"></div>
-
-            <ul class="checklist">
-                <li><i class="fas fa-check"></i> Git / GitHub</li>
-                <li><i class="fas fa-check"></i> Fabric API</li>
-                <li><i class="fas fa-check"></i> Visual Studio Code</li>
-                <li><i class="fas fa-check"></i> IntelliJ IDEA</li>
-            </ul>
+        
+        <!-- Mobile Navigation Dropdown -->
+        <div class="md:hidden hidden bg-slate-900/95 backdrop-blur-xl border-b border-slate-800 absolute w-full shadow-2xl" id="mobile-menu">
+            <nav class="flex flex-col px-6 py-4 gap-4 text-sm font-medium text-slate-300">
+                <a href="#about" class="hover:text-white transition-colors mobile-link block py-2">About</a>
+                <a href="#skills" class="hover:text-white transition-colors mobile-link block py-2">Skills</a>
+                <a href="#projects" class="hover:text-white transition-colors mobile-link block py-2">Projects</a>
+                <a href="#education" class="hover:text-white transition-colors mobile-link block py-2">Education</a>
+                <a href="#contact" class="text-primary mobile-link block py-2 font-semibold">Let's Talk</a>
+            </nav>
         </div>
+    </header>
 
-        <div class="profile-footer">
-            <a href="https://drive.google.com/drive/folders/1kXTJJ8S-v2d5Eo7bq51s7Mg5QYvOv9k1?usp=sharing" class="download-cv">DOWNLOAD CV <i class="fas fa-download"></i></a>
-            <div class="social-icons">
-                <a href="https://github.com/Filiproessner"><i class="fab fa-github"></i></a>
-                <a href="https://discord.com/users/1082999367822225438"><i class="fab fa-discord"></i></a>
-                <a href="https://www.youtube.com/@Fip_VIp"><i class="fab fa-youtube"></i></a>
-                <a href="https://www.curseforge.com/members/fipvip/projects" title="CurseForge">
-                    <img src=".\icons\curseforge.svg" alt="CurseForge" class="social-icon" style="width: 24px; height: 24px; display: inline-block; vertical-align: middle;">
+    <!-- Hero Section -->
+    <section id="hero" class="relative pt-32 pb-20 md:pt-48 md:pb-32 px-6 max-w-6xl mx-auto flex flex-col justify-center min-h-[95vh]">
+        <div class="max-w-4xl animate-fade-in-up">
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-800/50 border border-slate-700/50 text-xs font-semibold text-primary mb-8 backdrop-blur-sm">
+                <span class="relative flex h-2 w-2">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                </span>
+                Available for opportunities • Berlin, Germany
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-white mb-6 leading-[1.05]">
+                High School Student & <br/>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400">Backend Engineer</span>
+            </h1>
+            
+            <p class="text-lg md:text-xl text-slate-400 mb-10 max-w-2xl leading-relaxed font-light">
+                Specializing in Mathematics & Computer Science. Passionate about building robust systems, Java performance optimization, and crafting interactive modern web experiences.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <a href="#contact" class="w-full sm:w-auto inline-flex justify-center items-center gap-2 px-7 py-3.5 bg-primary text-white font-medium rounded-lg hover:bg-primaryHover hover:-translate-y-0.5 transition-all shadow-[0_0_20px_rgba(59,130,246,0.3)]">
+                    <i data-lucide="mail" class="w-5 h-5"></i> Contact Me
+                </a>
+                <a href="#projects" class="w-full sm:w-auto inline-flex justify-center items-center gap-2 px-7 py-3.5 bg-slate-800/80 text-white font-medium rounded-lg border border-slate-700 hover:bg-slate-700 hover:-translate-y-0.5 transition-all">
+                    View Projects <i data-lucide="arrow-right" class="w-5 h-5"></i>
                 </a>
             </div>
+            
+            <div class="mt-16 pt-8 border-t border-slate-800/50 flex flex-wrap gap-3 items-center">
+                <span class="text-sm text-slate-500 mr-2 font-medium uppercase tracking-wider">Core Stack:</span>
+                <span class="px-3 py-1.5 bg-slate-800/40 border border-slate-700/50 rounded-md text-xs text-slate-300 font-mono flex items-center gap-1.5"><i data-lucide="code" class="w-3.5 h-3.5 text-blue-400"></i> Java</span>
+                <span class="px-3 py-1.5 bg-slate-800/40 border border-slate-700/50 rounded-md text-xs text-slate-300 font-mono flex items-center gap-1.5"><i data-lucide="code" class="w-3.5 h-3.5 text-purple-400"></i> Kotlin</span>
+                <span class="px-3 py-1.5 bg-slate-800/40 border border-slate-700/50 rounded-md text-xs text-slate-300 font-mono flex items-center gap-1.5"><i data-lucide="server" class="w-3.5 h-3.5 text-green-400"></i> Spring Boot</span>
+                <span class="px-3 py-1.5 bg-slate-800/40 border border-slate-700/50 rounded-md text-xs text-slate-300 font-mono flex items-center gap-1.5"><i data-lucide="layout" class="w-3.5 h-3.5 text-cyan-400"></i> React</span>
+            </div>
         </div>
-    </aside>
+    </section>
 
-    <main class="main-content">
+    <!-- About Section -->
+    <section id="about" class="py-24 bg-slate-900/30 border-y border-slate-800/50 relative">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="h-[1px] w-8 bg-primary"></div>
+                        <h2 class="text-sm font-bold tracking-widest text-primary uppercase">About Me</h2>
+                    </div>
+                    <h3 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-8 leading-tight">Engineering logic into <span class="text-slate-400">elegant solutions.</span></h3>
+                    
+                    <div class="space-y-6 text-slate-400 font-light leading-relaxed text-lg">
+                        <p>
+                            I am a high school student in the Oberstufe (Abitur Track) enrolled in the <strong class="text-slate-200 font-medium">MINT specialization track</strong> at Andreas-Gymnasium, Berlin. My academic focus is heavily rooted in advanced Mathematics and Computer Science (Spezialleistungskurs Mathematik).
+                        </p>
+                        <p>
+                            I believe in building a strong foundational understanding of computer systems. While I have experience crafting full-stack web applications, my true passion lies in <strong class="text-slate-200 font-medium">backend architecture, object-oriented design, and performance optimization</strong>—which I actively apply through Java byte-code manipulation in Minecraft modding.
+                        </p>
+                        <p>
+                            Whether I am scripting hardware automations with AutoHotkey, configuring self-hosted Linux environments on a Raspberry Pi, or developing Spring Boot REST APIs, I am constantly exploring the mechanics of software engineering.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4 lg:gap-6 relative">
+                    <!-- Decorative background element -->
+                    <div class="absolute inset-0 bg-gradient-to-tr from-blue-500/5 to-purple-500/5 rounded-3xl -m-4 border border-slate-800/50 -z-10"></div>
+                    
+                    <div class="card-glass p-8 rounded-2xl flex flex-col items-center justify-center text-center">
+                        <div class="w-14 h-14 bg-blue-500/10 rounded-full flex items-center justify-center mb-4">
+                            <i data-lucide="braces" class="w-6 h-6 text-blue-400"></i>
+                        </div>
+                        <span class="text-xl font-bold text-white">Java/Kotlin</span>
+                        <span class="text-sm text-slate-400 mt-1">Backend Core</span>
+                    </div>
+                    
+                    <div class="card-glass p-8 rounded-2xl flex flex-col items-center justify-center text-center lg:translate-y-12">
+                        <div class="w-14 h-14 bg-purple-500/10 rounded-full flex items-center justify-center mb-4">
+                            <i data-lucide="calculator" class="w-6 h-6 text-purple-400"></i>
+                        </div>
+                        <span class="text-xl font-bold text-white">Algorithms</span>
+                        <span class="text-sm text-slate-400 mt-1">Math & Logic</span>
+                    </div>
+                    
+                    <div class="card-glass p-8 rounded-2xl flex flex-col items-center justify-center text-center">
+                        <div class="w-14 h-14 bg-teal-500/10 rounded-full flex items-center justify-center mb-4">
+                            <i data-lucide="layout-template" class="w-6 h-6 text-teal-400"></i>
+                        </div>
+                        <span class="text-xl font-bold text-white">React UI</span>
+                        <span class="text-sm text-slate-400 mt-1">Modern Web</span>
+                    </div>
+                    
+                    <div class="card-glass p-8 rounded-2xl flex flex-col items-center justify-center text-center lg:translate-y-12">
+                        <div class="w-14 h-14 bg-rose-500/10 rounded-full flex items-center justify-center mb-4">
+                            <i data-lucide="server" class="w-6 h-6 text-rose-400"></i>
+                        </div>
+                        <span class="text-xl font-bold text-white">Linux/Pi</span>
+                        <span class="text-sm text-slate-400 mt-1">Self-Hosting</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack & Skills -->
+    <section id="skills" class="py-24 max-w-6xl mx-auto px-6">
+        <div class="text-center mb-16 md:mb-20">
+            <div class="flex items-center justify-center gap-3 mb-4">
+                <div class="h-[1px] w-8 bg-primary"></div>
+                <h2 class="text-sm font-bold tracking-widest text-primary uppercase">Technical Arsenal</h2>
+                <div class="h-[1px] w-8 bg-primary"></div>
+            </div>
+            <h3 class="text-3xl md:text-5xl font-bold text-white">Skills & Technologies</h3>
+        </div>
         
-        <section id="home" class="hero-banner">
-            <div class="hero-text">
-                <h1>Hey, I'm Filip!</h1>
-                <div class="code-line">
-                    <code>&lt;i&gt; I build <span id="typewriter"></span> &lt;/i&gt;</code>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Backend -->
+            <div class="card-glass p-8 rounded-2xl group">
+                <div class="w-14 h-14 bg-blue-500/10 rounded-xl flex items-center justify-center mb-8 border border-blue-500/20 group-hover:bg-blue-500/20 transition-colors">
+                    <i data-lucide="server-cog" class="text-blue-400 w-7 h-7"></i>
                 </div>
-                <a href="#projects" class="btn-primary">EXPLORE</a>
-            </div>
-            <div class="profile-image img">
-                <img src=".\icons\fullpfp.png" class="profile-image" alt="Filip Roessner">
-            </div>
-        </section>
-
-        
-
-
-        <section id="skills">
-            <h3 class="section-title">My Skills</h3>
-            <div class="grid-3">
-                <div class="card service-card">
-                    <i class="fas fa-laptop-code"></i>
-                    <h4>Web Development</h4>
-                    <p>Modern frontend, responsive Web Apps and clean UI/UX design.</p>
-                    <a href="#" class="card-link">Learn More ></a>
-                </div>
-                <div class="card service-card">
-                    <i class="fas fa-puzzle-piece"></i>
-                    <h4>Modding</h4>
-                    <p>Entwicklung von Minecraft Mods, Plugins und API-Integrationen.</p>
-                    <a href="#" class="card-link">Learn More ></a>
-                </div>
-                <div class="card service-card">
-                    <i class="fas fa-cogs"></i>
-                    <h4>Tools & Automation</h4>
-                    <p>CLI-Tools, Skripte und Workflow-Automatisierungen in Python.</p>
-                    <a href="#" class="card-link">Learn More ></a>
-                </div>
-            </div>
-        </section>
-
-        <section id="history" class="mt-50">
-            <h3 class="section-title">History</h3>
-            <div class="grid-2 timeline-container">
-                <div class="timeline-column">
-                    <h4 class="timeline-title">Education</h4>
-                    <div class="timeline-item">
-                        <div class="timeline-marker"></div>
-                        <div class="timeline-year">2020</div>
-                        <h5>Started at Andreas Gymnasium</h5>
-                        <p>Joined one of Berlin's renowned gymnasiums and began developing a serious interest in software engineering, programming, and technology.</p>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-marker"></div>
-                        <div class="timeline-year">2026</div>
-                        <h5>Gained General Certificate of Secondary Education (GCSE equivalent) / MSA</h5>
-                        <p>Finished 10th grade with excellent results in all subjects and gained a strong foundation in computer science and mathematics.</p>
-                    </div>
-                </div>
-                <div class="timeline-column">
-                    <h4 class="timeline-title">Work</h4>
-                    <div class="timeline-item">
-                        <div class="timeline-marker"></div>
-                        <div class="timeline-year">2024</div>
-                        <h5>Internship at Diebold Nixdorf</h5>
-                        <p>Gained hands-on experience at a global technology company specialising in banking and retail software. Worked alongside professional development teams on enterprise-level projects.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="projects" class="mt-50">
-            <h3 class="section-title">My Projects</h3>
-            <div class="filter-bar">
-                <button class="filter-btn active" data-filter="all">All</button>
-                <button class="filter-btn" data-filter="web">Web-Apps</button>
-                <button class="filter-btn" data-filter="mods">Mods</button>
-                <button class="filter-btn" data-filter="tools">Tools</button>
+                <h4 class="text-xl font-bold text-white mb-6">Backend Engineering</h4>
+                <ul class="space-y-4">
+                    <li class="flex items-start gap-3 text-slate-300">
+                        <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                        <span class="font-light">Java & Kotlin</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-slate-300">
+                        <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                        <span class="font-light">Spring Boot framework</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-slate-300">
+                        <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                        <span class="font-light">REST API Integration</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-slate-300">
+                        <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                        <span class="font-light">OOP Architecture & Design</span>
+                    </li>
+                </ul>
             </div>
             
-            <div class="grid-3 projects-grid">
-                <div class="project-card" data-category="mods">
-                    <img src=".\icons\modicon.png" alt="Projekt 1">
-                    <div class="project-overlay">
-                        <h5>Auto Shieldbreaker</h5>
-                        <a href="https://github.com/Filiproessner/Auto-Shieldbreaker"><i class="fas fa-external-link-alt"></i></a>
-                    </div>
+            <!-- Web -->
+            <div class="card-glass p-8 rounded-2xl group">
+                <div class="w-14 h-14 bg-teal-500/10 rounded-xl flex items-center justify-center mb-8 border border-teal-500/20 group-hover:bg-teal-500/20 transition-colors">
+                    <i data-lucide="globe-2" class="text-teal-400 w-7 h-7"></i>
                 </div>
-                <div class="project-card" data-category="tools">
-                    <img src=".\icons\freeplay.png" alt="Projekt 2">
-                    <div class="project-overlay">
-                        <h5>Freeplay</h5>
-                        <a href="freeplayapp.vercel.apps"><i class="fas fa-external-link-alt"></i></a>
-                    </div>
-                </div>
-                <div class="project-card" data-category="tools">
-                    <img src=".\icons\file.avif" alt="Projekt 3">
-                    <div class="project-overlay">
-                        <h5>File Sorter</h5>
-                        <a href="https://github.com/Filiproessner/FILESORTER"><i class="fas fa-external-link-alt"></i></a>
-                    </div>
-                </div>
+                <h4 class="text-xl font-bold text-white mb-6">Frontend & Web</h4>
+                <ul class="space-y-4">
+                    <li class="flex items-start gap-3 text-slate-300">
+                        <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                        <span class="font-light">HTML5 & CSS3</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-slate-300">
+                        <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                        <span class="font-light">JavaScript (ES6+)</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-slate-300">
+                        <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                        <span class="font-light">React Library</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-slate-300">
+                        <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                        <span class="font-light">Tailwind CSS</span>
+                    </li>
+                </ul>
+            </div>
             
-            <div class="project-card" data-category="mods">
-                    <img src=".\icons\anchors.png" alt="Projekt 4">
-                    <div class="project-overlay">
-                        <h5>Better anchors</h5>
-                        <a href="https://github.com/Filiproessner/Better-Anchors"><i class="fas fa-external-link-alt"></i></a>
+            <!-- Modding & Tools -->
+            <div class="card-glass p-8 rounded-2xl group">
+                <div class="w-14 h-14 bg-purple-500/10 rounded-xl flex items-center justify-center mb-8 border border-purple-500/20 group-hover:bg-purple-500/20 transition-colors">
+                    <i data-lucide="wrench" class="text-purple-400 w-7 h-7"></i>
+                </div>
+                <h4 class="text-xl font-bold text-white mb-6">Modding & Tooling</h4>
+                <ul class="space-y-4">
+                    <li class="flex items-start gap-3 text-slate-300">
+                        <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                        <span class="font-light">Fabric API</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-slate-300">
+                        <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                        <span class="font-light">Mixins & Mojang Mappings</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-slate-300">
+                        <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                        <span class="font-light">Git & GitHub VC</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-slate-300">
+                        <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                        <span class="font-light">IntelliJ IDEA</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Systems & Automation -->
+            <div class="card-glass p-8 rounded-2xl group">
+                <div class="w-14 h-14 bg-rose-500/10 rounded-xl flex items-center justify-center mb-8 border border-rose-500/20 group-hover:bg-rose-500/20 transition-colors">
+                    <i data-lucide="terminal" class="text-rose-400 w-7 h-7"></i>
+                </div>
+                <h4 class="text-xl font-bold text-white mb-6">Systems & Auto</h4>
+                <ul class="space-y-4">
+                    <li class="flex items-start gap-3 text-slate-300">
+                        <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                        <span class="font-light">Linux Environments</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-slate-300">
+                        <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                        <span class="font-light">Raspberry Pi</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-slate-300">
+                        <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                        <span class="font-light">AutoHotkey (AHK)</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-slate-300">
+                        <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                        <span class="font-light">Dashy (Self-hosted)</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Gallery -->
+    <section id="projects" class="py-24 bg-slate-900/40 border-y border-slate-800/50">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="h-[1px] w-8 bg-primary"></div>
+                        <h2 class="text-sm font-bold tracking-widest text-primary uppercase">Portfolio</h2>
+                    </div>
+                    <h3 class="text-3xl md:text-5xl font-bold text-white">Featured Projects</h3>
+                </div>
+                <a href="https://github.com/Filiproessner" target="_blank" class="inline-flex items-center gap-2 text-sm font-medium text-slate-400 hover:text-white transition-colors pb-2 border-b border-transparent hover:border-slate-400">
+                    View full GitHub <i data-lucide="external-link" class="w-4 h-4"></i>
+                </a>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Project 1: Minecraft Mods -->
+                <div class="card-glass rounded-2xl overflow-hidden group flex flex-col h-full border border-slate-700/50 hover:border-blue-500/50">
+                    <div class="h-56 bg-slate-800 relative overflow-hidden flex items-center justify-center border-b border-slate-700/50">
+                        <div class="absolute inset-0 bg-gradient-to-br from-blue-900/40 to-slate-900 z-10 transition-opacity group-hover:opacity-80"></div>
+                        
+                        <!-- Abstract placeholder background -->
+                        <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(#3b82f6 1px, transparent 1px); background-size: 20px 20px;"></div>
+                        
+                        <div class="relative z-20 transform group-hover:scale-110 transition-transform duration-500">
+                            <i data-lucide="swords" class="w-20 h-20 text-blue-400 drop-shadow-[0_0_15px_rgba(59,130,246,0.5)]"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="p-8 flex flex-col flex-grow">
+                        <div class="flex flex-wrap gap-2 mb-5">
+                            <span class="text-xs font-mono px-3 py-1 rounded-md bg-blue-500/10 text-blue-400 border border-blue-500/20">Java</span>
+                            <span class="text-xs font-mono px-3 py-1 rounded-md bg-slate-800 text-slate-300 border border-slate-700">Fabric API</span>
+                            <span class="text-xs font-mono px-3 py-1 rounded-md bg-slate-800 text-slate-300 border border-slate-700">Mixins</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white mb-4 group-hover:text-blue-400 transition-colors">Auto-Shieldbreaker & OmniPerf</h4>
+                        <p class="text-slate-400 font-light mb-8 flex-grow leading-relaxed text-[15px]">
+                            Performance and utility modifications for Minecraft 1.21+ published on CurseForge. Implemented advanced Java byte-code manipulation utilizing Mixins and Mojang mappings to optimize performance algorithms and significantly enhance gameplay mechanics.
+                        </p>
+                        <div class="mt-auto pt-6 border-t border-slate-800/50 flex justify-between items-center">
+                            <a href="#" class="inline-flex items-center gap-2 text-sm font-semibold text-white hover:text-primary transition-colors">
+                                View on CurseForge <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            <div class="project-card" data-category="mods">
-                    <img src=".\icons\fps.png" alt="Projekt 5">
-                    <div class="project-overlay">
-                        <h5>OmniPerf-FPSBOOST</h5>
-                        <a href="https://www.curseforge.com/minecraft/mc-mods/omni-pref"><i class="fas fa-external-link-alt"></i></a>
+
+                <!-- Project 2: Backend -->
+                <div class="card-glass rounded-2xl overflow-hidden group flex flex-col h-full border border-slate-700/50 hover:border-green-500/50">
+                    <div class="h-56 bg-slate-800 relative overflow-hidden flex items-center justify-center border-b border-slate-700/50">
+                        <div class="absolute inset-0 bg-gradient-to-br from-green-900/40 to-slate-900 z-10 transition-opacity group-hover:opacity-80"></div>
+                        <div class="absolute inset-0 opacity-20" style="background-image: repeating-linear-gradient(45deg, #10b981 0, #10b981 1px, transparent 0, transparent 50%); background-size: 20px 20px;"></div>
+                        
+                        <div class="relative z-20 transform group-hover:scale-110 transition-transform duration-500">
+                            <i data-lucide="database" class="w-20 h-20 text-green-400 drop-shadow-[0_0_15px_rgba(16,185,129,0.5)]"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="p-8 flex flex-col flex-grow">
+                        <div class="flex flex-wrap gap-2 mb-5">
+                            <span class="text-xs font-mono px-3 py-1 rounded-md bg-green-500/10 text-green-400 border border-green-500/20">Spring Boot</span>
+                            <span class="text-xs font-mono px-3 py-1 rounded-md bg-slate-800 text-slate-300 border border-slate-700">Java/Kotlin</span>
+                            <span class="text-xs font-mono px-3 py-1 rounded-md bg-slate-800 text-slate-300 border border-slate-700">REST API</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white mb-4 group-hover:text-green-400 transition-colors">Backend Systems & APIs</h4>
+                        <p class="text-slate-400 font-light mb-8 flex-grow leading-relaxed text-[15px]">
+                            Designed and implemented clean, scalable Object-Oriented applications. Built robust custom REST API integrations and backend services using Spring Boot as part of advanced Computer Science coursework and personal exploration.
+                        </p>
+                        <div class="mt-auto pt-6 border-t border-slate-800/50 flex justify-between items-center">
+                            <a href="#" class="inline-flex items-center gap-2 text-sm font-semibold text-white hover:text-green-400 transition-colors">
+                                View Source <i data-lucide="github" class="w-4 h-4"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <div class="project-card" data-category="web">
-                    <img src=".\icons\saas.png" alt="Projekt 6">
-                    <div class="project-overlay">
-                        <h5>IO-Works</h5>
-                        <a href="https://ioworks.vercel.app"><i class="fas fa-external-link-alt"></i></a>
+
+                <!-- Project 3: Hardware -->
+                <div class="card-glass rounded-2xl overflow-hidden group flex flex-col h-full border border-slate-700/50 hover:border-rose-500/50">
+                    <div class="h-56 bg-slate-800 relative overflow-hidden flex items-center justify-center border-b border-slate-700/50">
+                        <div class="absolute inset-0 bg-gradient-to-br from-rose-900/40 to-slate-900 z-10 transition-opacity group-hover:opacity-80"></div>
+                        <div class="absolute inset-0 opacity-20" style="background-image: linear-gradient(#f43f5e 1px, transparent 1px), linear-gradient(90deg, #f43f5e 1px, transparent 1px); background-size: 30px 30px;"></div>
+                        
+                        <div class="relative z-20 transform group-hover:scale-110 transition-transform duration-500">
+                            <i data-lucide="cpu" class="w-20 h-20 text-rose-400 drop-shadow-[0_0_15px_rgba(244,63,94,0.5)]"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="p-8 flex flex-col flex-grow">
+                        <div class="flex flex-wrap gap-2 mb-5">
+                            <span class="text-xs font-mono px-3 py-1 rounded-md bg-rose-500/10 text-rose-400 border border-rose-500/20">Raspberry Pi</span>
+                            <span class="text-xs font-mono px-3 py-1 rounded-md bg-slate-800 text-slate-300 border border-slate-700">AHK</span>
+                            <span class="text-xs font-mono px-3 py-1 rounded-md bg-slate-800 text-slate-300 border border-slate-700">Dashy</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white mb-4 group-hover:text-rose-400 transition-colors">Hardware & Automations</h4>
+                        <p class="text-slate-400 font-light mb-8 flex-grow leading-relaxed text-[15px]">
+                            Automated complex workflow scripts utilizing AutoHotkey (AHK) for precision input sequences. Configured and self-hosted interactive Raspberry Pi system metrics and weather dashboards using Dashy on a Linux environment.
+                        </p>
+                        <div class="mt-auto pt-6 border-t border-slate-800/50 flex justify-between items-center">
+                            <a href="#" class="inline-flex items-center gap-2 text-sm font-semibold text-white hover:text-rose-400 transition-colors">
+                                Read Details <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <div class="project-card" data-category="web">
-                    <img src=".\icons\pfpf.png" alt="Projekt 7">
-                    <div class="project-overlay">
-                        <h5>Portfolio-WebsiteV2</h5>
-                        <a href="https://github.com/Filiproessner/Personal-Website"><i class="fas fa-external-link-alt"></i></a>
+
+                <!-- Project 4: Web -->
+                <div class="card-glass rounded-2xl overflow-hidden group flex flex-col h-full border border-slate-700/50 hover:border-cyan-500/50">
+                    <div class="h-56 bg-slate-800 relative overflow-hidden flex items-center justify-center border-b border-slate-700/50">
+                        <div class="absolute inset-0 bg-gradient-to-br from-cyan-900/40 to-slate-900 z-10 transition-opacity group-hover:opacity-80"></div>
+                        <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at center, #06b6d4 2px, transparent 2px); background-size: 24px 24px;"></div>
+                        
+                        <div class="relative z-20 transform group-hover:scale-110 transition-transform duration-500">
+                            <i data-lucide="layout-dashboard" class="w-20 h-20 text-cyan-400 drop-shadow-[0_0_15px_rgba(6,182,212,0.5)]"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="p-8 flex flex-col flex-grow">
+                        <div class="flex flex-wrap gap-2 mb-5">
+                            <span class="text-xs font-mono px-3 py-1 rounded-md bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">React</span>
+                            <span class="text-xs font-mono px-3 py-1 rounded-md bg-slate-800 text-slate-300 border border-slate-700">Tailwind CSS</span>
+                            <span class="text-xs font-mono px-3 py-1 rounded-md bg-slate-800 text-slate-300 border border-slate-700">JS</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white mb-4 group-hover:text-cyan-400 transition-colors">Modern Web Interfaces</h4>
+                        <p class="text-slate-400 font-light mb-8 flex-grow leading-relaxed text-[15px]">
+                            Crafted responsive web apps and highly interactive UI templates utilizing React, Tailwind CSS, and vanilla JavaScript. Heavily focused on pixel-perfect layouts, dynamic responsive design, and smooth user micro-interactions.
+                        </p>
+                        <div class="mt-auto pt-6 border-t border-slate-800/50 flex justify-between items-center">
+                            <a href="#" class="inline-flex items-center gap-2 text-sm font-semibold text-white hover:text-cyan-400 transition-colors">
+                                View Demo <i data-lucide="external-link" class="w-4 h-4"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="contact" class="mt-50">
-            <h3 class="section-title">Contact</h3>
-            <div class="card contact-form-card">
-                <form class="contact-form">
-                    <div class="form-row">
-                        <input type="text" placeholder="Name" required>
-                        <input type="email" placeholder="E-Mail" required>
-                    </div>
-                    <textarea rows="5" placeholder="Message" required></textarea>
-                    <button type="submit" class="btn-primary mt-20">Send</button>
-                </form>
+    <!-- Education Timeline -->
+    <section id="education" class="py-24 max-w-5xl mx-auto px-6">
+        <div class="text-center mb-20">
+            <div class="flex items-center justify-center gap-3 mb-4">
+                <div class="h-[1px] w-8 bg-primary"></div>
+                <h2 class="text-sm font-bold tracking-widest text-primary uppercase">Journey</h2>
+                <div class="h-[1px] w-8 bg-primary"></div>
             </div>
-        </section>
+            <h3 class="text-3xl md:text-5xl font-bold text-white">Education & Milestones</h3>
+        </div>
 
-    </main>
-    <script src="script.js"></script>
+        <div class="timeline-container py-8 px-2">
+            
+            <!-- Timeline Item 1: Abitur -->
+            <div class="relative pl-12 md:pl-0 w-full mb-16 flex flex-col md:flex-row items-start md:justify-between group">
+                <div class="timeline-dot top-6 transition-transform group-hover:scale-125 group-hover:bg-blue-400 group-hover:border-blue-900 group-hover:shadow-[0_0_15px_rgba(59,130,246,0.5)] duration-300"></div>
+                <div class="md:w-1/2 md:text-right md:pr-14 mb-4 md:mb-0 pt-5">
+                    <span class="inline-block text-primary font-mono font-semibold tracking-wide bg-primary/10 border border-primary/20 px-4 py-1.5 rounded-lg">Expected 2028</span>
+                </div>
+                <div class="md:w-1/2 md:pl-14">
+                    <div class="card-glass p-8 rounded-2xl relative border-l-4 border-l-primary group-hover:border-l-blue-400 transition-colors">
+                        <h4 class="text-2xl font-bold text-white mb-2">Abitur / Oberstufe</h4>
+                        <div class="flex items-center gap-2 text-primary font-medium mb-4 text-sm">
+                            <i data-lucide="graduation-cap" class="w-4 h-4"></i>
+                            Andreas-Gymnasium, Berlin
+                        </div>
+                        <p class="text-slate-400 font-light text-[15px] leading-relaxed mb-5">
+                            Enrolled in the highly rigorous MINT specialization track focusing on Mathematics, Computer Science, and Natural Sciences. Pursuing the <strong>Spezialleistungskurs Mathematik</strong>.
+                        </p>
+                        <div class="flex flex-wrap gap-2 text-xs font-medium text-slate-300 bg-slate-800/50 rounded-lg p-3 border border-slate-700/50">
+                            <div class="flex items-center gap-1.5 w-full"><i data-lucide="languages" class="w-4 h-4 text-slate-400"></i> Languages:</div>
+                            <span class="px-2 py-1 bg-slate-700/50 rounded">Native German</span>
+                            <span class="px-2 py-1 bg-slate-700/50 rounded">Advanced English (Cambridge C1/C2)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline Item 2: Modding -->
+            <div class="relative pl-12 md:pl-0 w-full mb-16 flex flex-col md:flex-row-reverse items-start md:justify-between group">
+                <div class="timeline-dot top-6 transition-transform group-hover:scale-125 group-hover:bg-purple-400 group-hover:border-purple-900 group-hover:shadow-[0_0_15px_rgba(168,85,247,0.5)] duration-300"></div>
+                <div class="md:w-1/2 md:text-left md:pl-14 mb-4 md:mb-0 pt-5">
+                    <span class="inline-block text-slate-300 font-mono font-semibold tracking-wide bg-slate-800 border border-slate-700 px-4 py-1.5 rounded-lg">Active Development</span>
+                </div>
+                <div class="md:w-1/2 md:pr-14 md:text-right text-left">
+                    <div class="card-glass p-8 rounded-2xl relative border-l-4 md:border-l-0 md:border-r-4 border-l-purple-500 md:border-r-purple-500 group-hover:border-l-purple-400 md:group-hover:border-r-purple-400 transition-colors">
+                        <h4 class="text-2xl font-bold text-white mb-2">Minecraft Modding</h4>
+                        <div class="flex md:justify-end items-center gap-2 text-purple-400 font-medium mb-4 text-sm">
+                            <i data-lucide="gamepad-2" class="w-4 h-4"></i>
+                            CurseForge Creator
+                        </div>
+                        <p class="text-slate-400 font-light text-[15px] leading-relaxed">
+                            Developing, maintaining, and publishing complex Fabric API mods. Gained deep applied knowledge of Java Byte-code manipulation, Mojang mappings, and open-source version control lifecycle.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline Item 3: Backend & Systems -->
+            <div class="relative pl-12 md:pl-0 w-full flex flex-col md:flex-row items-start md:justify-between group">
+                <div class="timeline-dot top-6 transition-transform group-hover:scale-125 group-hover:bg-teal-400 group-hover:border-teal-900 group-hover:shadow-[0_0_15px_rgba(45,212,191,0.5)] duration-300"></div>
+                <div class="md:w-1/2 md:text-right md:pr-14 mb-4 md:mb-0 pt-5">
+                    <span class="inline-block text-slate-300 font-mono font-semibold tracking-wide bg-slate-800 border border-slate-700 px-4 py-1.5 rounded-lg">Ongoing Pursuit</span>
+                </div>
+                <div class="md:w-1/2 md:pl-14">
+                    <div class="card-glass p-8 rounded-2xl relative border-l-4 border-l-teal-500 group-hover:border-l-teal-400 transition-colors">
+                        <h4 class="text-2xl font-bold text-white mb-2">Backend Architecture</h4>
+                        <div class="flex items-center gap-2 text-teal-400 font-medium mb-4 text-sm">
+                            <i data-lucide="network" class="w-4 h-4"></i>
+                            Self-Taught & Advanced Coursework
+                        </div>
+                        <p class="text-slate-400 font-light text-[15px] leading-relaxed">
+                            Continuous learning in solid Object-Oriented design principles, building scalable Spring Boot REST APIs, and hands-on Linux server management via Raspberry Pi self-hosting solutions.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 bg-slate-900/60 border-t border-slate-800/50 relative overflow-hidden">
+        <!-- Background Glow -->
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-blue-900/20 via-slate-900/0 to-transparent pointer-events-none"></div>
+        
+        <div class="max-w-6xl mx-auto px-6 relative z-10">
+            <div class="grid lg:grid-cols-5 gap-16 lg:gap-8">
+                
+                <div class="lg:col-span-2">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="h-[1px] w-8 bg-primary"></div>
+                        <h2 class="text-sm font-bold tracking-widest text-primary uppercase">Get in Touch</h2>
+                    </div>
+                    <h3 class="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">Let's build <br/><span class="text-slate-400">something great.</span></h3>
+                    <p class="text-slate-400 font-light leading-relaxed mb-12 max-w-md text-lg">
+                        Whether you want to discuss backend architectures, collaborate on a technical project, or just talk code, I'm always open to connecting.
+                    </p>
+                    
+                    <div class="space-y-8">
+                        <div class="flex items-start gap-5 group cursor-default">
+                            <div class="w-14 h-14 rounded-xl bg-slate-800/80 border border-slate-700 flex items-center justify-center shrink-0 group-hover:bg-primary/10 group-hover:border-primary/30 transition-colors shadow-sm">
+                                <i data-lucide="map-pin" class="w-6 h-6 text-slate-300 group-hover:text-primary transition-colors"></i>
+                            </div>
+                            <div class="pt-1">
+                                <p class="text-sm text-slate-500 font-medium tracking-wide uppercase mb-1">Location</p>
+                                <p class="text-white font-medium text-lg">Berlin, Germany</p>
+                            </div>
+                        </div>
+
+                        <a href="https://github.com/Filiproessner" target="_blank" class="flex items-start gap-5 group cursor-pointer w-fit">
+                            <div class="w-14 h-14 rounded-xl bg-slate-800/80 border border-slate-700 flex items-center justify-center shrink-0 group-hover:bg-primary/10 group-hover:border-primary/30 transition-colors shadow-sm">
+                                <i data-lucide="github" class="w-6 h-6 text-slate-300 group-hover:text-primary transition-colors"></i>
+                            </div>
+                            <div class="pt-1">
+                                <p class="text-sm text-slate-500 font-medium tracking-wide uppercase mb-1">GitHub Portfolio</p>
+                                <p class="text-white font-medium text-lg border-b border-transparent group-hover:border-white transition-colors">github.com/Filiproessner</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="lg:col-span-3">
+                    <div class="card-glass p-8 md:p-10 rounded-2xl relative shadow-2xl">
+                        <form class="space-y-6" onsubmit="event.preventDefault(); alert('Message sent successfully! (Simulation)');">
+                            <div class="grid sm:grid-cols-2 gap-6">
+                                <div class="space-y-2">
+                                    <label class="text-sm font-medium text-slate-300 ml-1">First Name</label>
+                                    <input type="text" class="w-full bg-slate-900/50 border border-slate-700 rounded-xl px-5 py-4 text-white placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all shadow-inner" placeholder="John" required>
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-sm font-medium text-slate-300 ml-1">Last Name</label>
+                                    <input type="text" class="w-full bg-slate-900/50 border border-slate-700 rounded-xl px-5 py-4 text-white placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all shadow-inner" placeholder="Doe" required>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-sm font-medium text-slate-300 ml-1">Email Address</label>
+                                <input type="email" class="w-full bg-slate-900/50 border border-slate-700 rounded-xl px-5 py-4 text-white placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all shadow-inner" placeholder="john@example.com" required>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-sm font-medium text-slate-300 ml-1">Your Message</label>
+                                <textarea rows="5" class="w-full bg-slate-900/50 border border-slate-700 rounded-xl px-5 py-4 text-white placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all shadow-inner resize-none" placeholder="Hello Filip, I'd like to discuss..." required></textarea>
+                            </div>
+                            <button type="submit" class="w-full py-4 mt-2 bg-primary hover:bg-primaryHover text-white font-semibold rounded-xl transition-all shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:shadow-[0_0_30px_rgba(59,130,246,0.5)] flex items-center justify-center gap-2 group">
+                                Send Message <i data-lucide="send" class="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800/80 bg-slate-950 py-12 relative z-10">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-8">
+                <div class="flex items-center gap-2 text-xl font-bold tracking-tight text-white">
+                    <i data-lucide="terminal-square" class="text-primary w-6 h-6"></i>
+                    Filip<span class="text-slate-400">Roessner</span>
+                </div>
+                
+                <div class="flex items-center gap-6">
+                    <a href="https://github.com/Filiproessner" target="_blank" class="text-slate-400 hover:text-white transition-colors" aria-label="GitHub">
+                        <i data-lucide="github" class="w-6 h-6"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-800/50 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-slate-500 text-sm font-light">
+                    &copy; <script>document.write(new Date().getFullYear())</script> Filip Roessner. All rights reserved.
+                </p>
+                <p class="text-slate-500 text-sm font-light flex items-center gap-1.5">
+                    Built with <i data-lucide="heart" class="w-3.5 h-3.5 text-rose-500 fill-rose-500/20"></i> in Berlin.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Mobile Menu Toggle Logic
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        const links = document.querySelectorAll('.mobile-link');
+        const menuIcon = document.getElementById('menu-icon');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+            if (menu.classList.contains('hidden')) {
+                menuIcon.setAttribute('data-lucide', 'menu');
+            } else {
+                menuIcon.setAttribute('data-lucide', 'x');
+            }
+            lucide.createIcons();
+        });
+
+        // Close mobile menu on link click
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+                menuIcon.setAttribute('data-lucide', 'menu');
+                lucide.createIcons();
+            });
+        });
+
+        // Dynamic Glass Nav on Scroll
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                header.classList.add('shadow-lg', 'bg-slate-900/85');
+                header.classList.remove('bg-slate-900/75');
+            } else {
+                header.classList.remove('shadow-lg', 'bg-slate-900/85');
+                header.classList.add('bg-slate-900/75');
+            }
+        });
+    </script>
 </body>
 </html>
