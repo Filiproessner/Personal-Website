@@ -46,8 +46,13 @@
     const originalTextNodes = new WeakMap();
     const languageButtons = document.querySelectorAll('[data-language]');
     const languageSwitch = document.querySelector('.language-switch');
+    const mobileNavigation = window.matchMedia('(max-width: 700px)');
     const toast = document.querySelector('.translation-toast');
     let toastTimer;
+    let savedLanguage = 'en';
+    try {
+        savedLanguage = localStorage.getItem('site-language') || 'en';
+    } catch {}
     document.querySelectorAll('[data-year]').forEach((element) => {
         element.textContent = new Date().getFullYear();
     });
@@ -62,7 +67,7 @@
         }, 3200);
     }
 
-    function setLanguage(language, notify = false) {
+    function setLanguage(language, notify = false, persist = true) {
         const selectedLanguage = language === 'de' ? 'de' : 'en';
         const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
             acceptNode(node) {
@@ -88,14 +93,22 @@
         languageButtons.forEach((button) => {
             button.setAttribute('aria-pressed', String(button.dataset.language === selectedLanguage));
         });
-        try {
-            localStorage.setItem('site-language', selectedLanguage);
-        } catch {}
+        if (persist) {
+            savedLanguage = selectedLanguage;
+            try {
+                localStorage.setItem('site-language', selectedLanguage);
+            } catch {}
+        }
         if (notify && selectedLanguage === 'de') showTranslationToast();
     }
 
     languageSwitch.addEventListener('click', () => {
-        setLanguage(document.documentElement.lang === 'de' ? 'en' : 'de', document.documentElement.lang !== 'de');
+        if (mobileNavigation.matches) {
+            setLanguage('en', false, false);
+            return;
+        }
+        const nextLanguage = document.documentElement.lang === 'de' ? 'en' : 'de';
+        setLanguage(nextLanguage, nextLanguage === 'de');
     });
 
     if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -110,9 +123,8 @@
         });
     }
 
-    let savedLanguage = 'en';
-    try {
-        savedLanguage = localStorage.getItem('site-language') || 'en';
-    } catch {}
-    setLanguage(savedLanguage);
+    setLanguage(mobileNavigation.matches ? 'en' : savedLanguage, false, false);
+    mobileNavigation.addEventListener('change', (event) => {
+        setLanguage(event.matches ? 'en' : savedLanguage, false, false);
+    });
 })();

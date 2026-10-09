@@ -31,6 +31,7 @@
         .language-switch { display: flex; gap: .25rem; padding: .2rem; border: 1px solid rgba(245,245,242,.18); border-radius: 999px; cursor: pointer; }
         .language-switch button { min-width: 2rem; padding: .3rem .4rem; border: 0; border-radius: 999px; background: transparent; color: var(--secondary); font: 600 .7rem var(--body); cursor: pointer; transition: background-color .24s ease, color .24s ease, transform .24s ease; }
         .language-switch button[aria-pressed="true"] { transform: scale(1.06); background: var(--foreground); color: var(--background); }
+        @media (max-width: 700px) { .language-switch { display: none; } }
         main { width: min(100%, 1100px); min-height: calc(100svh - 7rem); margin: 0 auto; padding: clamp(4rem, 10vw, 8rem) var(--gutter) 6rem; }
         h1 { margin: 0 0 clamp(3rem, 7vw, 6rem); font: 700 clamp(3.5rem, 10vw, 8rem)/.95 var(--display); letter-spacing: -.07em; }
         .legal-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(2rem, 7vw, 6rem); }
@@ -80,10 +81,15 @@
         (() => {
             const languageButtons = document.querySelectorAll('[data-language]');
             const languageElements = document.querySelectorAll('[data-en][data-de]');
+            const mobileNavigation = window.matchMedia('(max-width: 700px)');
             const responsibilityHeading = document.getElementById('responsibility-title');
+            let savedLanguage = 'en';
+            try {
+                savedLanguage = localStorage.getItem('site-language') || 'en';
+            } catch {}
             document.getElementById('year').textContent = new Date().getFullYear();
 
-            function setLanguage(language) {
+            function setLanguage(language, persist = true) {
                 const selectedLanguage = language === 'de' ? 'de' : 'en';
                 document.documentElement.lang = selectedLanguage;
                 document.title = selectedLanguage === 'de' ? 'Impressum — Filip Roessner' : 'Legal notice — Filip Roessner';
@@ -94,19 +100,25 @@
                 languageButtons.forEach((button) => {
                     button.setAttribute('aria-pressed', String(button.dataset.language === selectedLanguage));
                 });
-                try {
-                    localStorage.setItem('site-language', selectedLanguage);
-                } catch {}
+                if (persist) {
+                    savedLanguage = selectedLanguage;
+                    try {
+                        localStorage.setItem('site-language', selectedLanguage);
+                    } catch {}
+                }
             }
 
-            document.querySelector('.language-switch').addEventListener('click', (event) => {
+            document.querySelector('.language-switch').addEventListener('click', () => {
+                if (mobileNavigation.matches) {
+                    setLanguage('en', false);
+                    return;
+                }
                 setLanguage(document.documentElement.lang === 'de' ? 'en' : 'de');
             });
-            let savedLanguage = 'en';
-            try {
-                savedLanguage = localStorage.getItem('site-language') || 'en';
-            } catch {}
-            setLanguage(savedLanguage);
+            setLanguage(mobileNavigation.matches ? 'en' : savedLanguage, false);
+            mobileNavigation.addEventListener('change', (event) => {
+                setLanguage(event.matches ? 'en' : savedLanguage, false);
+            });
         })();
     </script>
 </body>

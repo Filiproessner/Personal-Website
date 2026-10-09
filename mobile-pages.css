@@ -56,6 +56,9 @@ a:hover { color: var(--accent); }
 .translation-toast p { color: #fff; font-size: .85rem; }
 
 @keyframes page-enter { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 700px) {
+    .language-switch { display: none; }
+}
 @media (max-width: 600px) {
     .subsite-header { padding-top: 1.1rem; }
     .page-nav { gap: .6rem 1rem; font-size: .75rem; }

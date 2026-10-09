@@ -268,6 +268,7 @@
             .desktop-section-link { display: none; }
             .mobile-section-link { display: inline-flex; }
             .language-switch { grid-column: 2; grid-row: 1; }
+            .language-switch { display: none; }
             .translation-toast { bottom: max(.75rem, env(safe-area-inset-bottom)); }
             .hero { min-height: 74svh; padding: 6.5rem var(--gutter) 5rem; }
             .hero h1 { margin-bottom: 1.7rem; font-size: clamp(3.8rem, 15.5vw, 7rem); }
@@ -533,6 +534,7 @@
             };
             const originalTextNodes = new WeakMap();
             const languageButtons = document.querySelectorAll('[data-language]');
+            const mobileNavigation = window.matchMedia('(max-width: 700px)');
             const languageMetadata = {
                 en: {
                     title: 'Filip Roessner — Systems & Backend Developer',
@@ -544,7 +546,7 @@
                 }
             };
 
-            function setLanguage(language) {
+            function setLanguage(language, persist = true) {
                 const selectedLanguage = language === 'de' ? 'de' : 'en';
                 const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
                     acceptNode(node) {
@@ -577,17 +579,24 @@
                 languageButtons.forEach((button) => {
                     button.setAttribute('aria-pressed', String(button.dataset.language === selectedLanguage));
                 });
-                try {
-                    localStorage.setItem('site-language', selectedLanguage);
-                } catch {}
+                if (persist) {
+                    try {
+                        localStorage.setItem('site-language', selectedLanguage);
+                    } catch {}
+                }
             }
 
             const languageSwitch = document.querySelector('.language-switch');
             const translationToast = document.getElementById('translation-toast');
             let translationToastTimeout;
             function selectLanguage(language) {
+                if (mobileNavigation.matches) {
+                    setLanguage('en', false);
+                    return;
+                }
                 const wasEnglish = document.documentElement.lang !== 'de';
                 setLanguage(language);
+                savedLanguage = language;
                 if (language !== 'de' || !wasEnglish) return;
 
                 window.clearTimeout(translationToastTimeout);
@@ -605,9 +614,11 @@
             try {
                 savedLanguage = localStorage.getItem('site-language') || 'en';
             } catch {}
-            if (savedLanguage === 'de') setLanguage('de');
+            setLanguage(mobileNavigation.matches ? 'en' : savedLanguage, false);
+            mobileNavigation.addEventListener('change', (event) => {
+                setLanguage(event.matches ? 'en' : savedLanguage, false);
+            });
 
-            const mobileNavigation = window.matchMedia('(max-width: 700px)');
             const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             let smoothScroller = null;
 
