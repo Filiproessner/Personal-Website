@@ -4,32 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#0c0c0e">
-    <meta name="description" content="Filip Roessner high school student based in Berlin, Germany.">
+    <meta name="description" content="Filip Roessner is a Berlin-based student developer focused on backend systems, Java, Kotlin, and Minecraft mods.">
     <title>Filip Roessner — Systems &amp; Backend Developer</title>
-    <meta name="author" content="Filip Roessner">
+    <link rel="icon" type="image/jpeg" href="icons/favicon.jpg">
+    <link rel="canonical" href="https://filiproessner.github.io/">
     <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Filip Roessner">
     <meta property="og:title" content="Filip Roessner — Systems &amp; Backend Developer">
-    <meta property="og:description" content="Filip Roessner is a systems and backend developer based in Berlin, Germany.">
+    <meta property="og:description" content="Filip Roessner is a Berlin-based student developer focused on backend systems, Java, Kotlin, and Minecraft mods.">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Filip Roessner — Systems &amp; Backend Developer">
-    <meta name="twitter:description" content="Filip Roessner is a systems and backend developer based in Berlin, Germany.">
+    <meta name="twitter:description" content="Filip Roessner is a Berlin-based student developer focused on backend systems, Java, Kotlin, and Minecraft mods.">
     <script type="application/ld+json">
         {
             "@context": "https://schema.org",
-            "@type": "Person",
+            "@type": "WebSite",
             "name": "Filip Roessner",
-            "jobTitle": "Student Developer · Systems & Backend Engineering Aspirant",
-            "description": "Filip Roessner is a systems and backend developer based in Berlin, Germany.",
-            "address": {
-                "@type": "PostalAddress",
-                "addressLocality": "Berlin",
-                "addressCountry": "Germany"
-            },
-            "sameAs": [
-                "https://github.com/Filiproessner",
-                "https://www.curseforge.com/members/fipvip/projects",
-                "https://modrinth.com/user/fipvip.roessner"
-            ]
+            "url": "https://filiproessner.github.io/",
+            "author": {
+                "@type": "Person",
+                "name": "Filip Roessner",
+                "url": "https://filiproessner.github.io/",
+                "sameAs": [
+                    "https://github.com/Filiproessner",
+                    "https://www.linkedin.com/in/filip-roessner-3aa257442/",
+                    "https://www.curseforge.com/members/fipvip/projects",
+                    "https://modrinth.com/user/fipvip.roessner"
+                ]
+            }
         }
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -57,7 +59,9 @@
             color: var(--foreground);
             font-family: var(--body);
             -webkit-font-smoothing: antialiased;
+            transition: opacity .18s ease, transform .18s ease;
         }
+        body.is-leaving { opacity: 0; transform: translateY(-8px); pointer-events: none; }
         a { color: inherit; text-decoration: none; }
         ::selection { color: var(--background); background: var(--foreground); }
         :focus-visible { outline: 1px solid var(--accent); outline-offset: 6px; }
@@ -73,8 +77,13 @@
         }
         .topbar-name { font: 600 .9rem var(--display); letter-spacing: -.03em; }
         .topbar-nav { display: flex; gap: clamp(1.4rem, 3.5vw, 3.5rem); color: var(--secondary); font-size: .85rem; }
-        .topbar-nav a, .social-links a { transition: color .3s var(--ease-out); }
+        .mobile-section-link { display: none; }
+        .topbar-nav a, .social-links a { transition: color .3s var(--ease-out), transform .24s var(--ease-out); }
         .topbar-nav a:hover, .social-links a:hover { color: var(--foreground); }
+        .topbar-nav a:active { transform: translateY(2px); }
+        .language-switch { display: flex; gap: .25rem; padding: .2rem; border: 1px solid rgba(245,245,242,.18); border-radius: 999px; cursor: pointer; }
+        .language-switch button { min-width: 2rem; padding: .3rem .4rem; border: 0; border-radius: 999px; background: transparent; color: var(--secondary); font: 600 .7rem var(--body); cursor: pointer; transition: background-color .24s ease, color .24s ease, transform .24s var(--ease-out); }
+        .language-switch button[aria-pressed="true"] { transform: scale(1.06); background: var(--foreground); color: var(--background); }
 
         .hero {
             display: flex;
@@ -98,14 +107,45 @@
             line-height: 1.5;
         }
         .hero-role strong { color: var(--foreground); font-weight: 500; }
+        .translation-toast {
+            position: fixed;
+            z-index: 40;
+            bottom: calc(12.5vh + env(safe-area-inset-bottom));
+            left: 50%;
+            display: flex;
+            align-items: center;
+            gap: .65rem;
+            width: max-content;
+            max-width: calc(100vw - 2rem);
+            margin: 0 auto;
+            padding: .65rem .9rem;
+            background: rgba(12,12,14,.12);
+            color: #fff;
+            backdrop-filter: blur(28px);
+            opacity: 0;
+            visibility: hidden;
+            transform: translate(-50%, 1rem);
+            transition: opacity .25s var(--ease-out), transform .35s var(--ease-out), visibility .25s;
+            pointer-events: none;
+        }
+        .translation-toast[hidden] { display: none; }
+        .translation-toast.is-visible { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+        .translation-toast-mark { color: var(--accent); font-size: 1.25rem; font-weight: 800; line-height: 1; }
+        .translation-toast p { margin: 0; color: #fff; font-size: .9rem; line-height: 1.5; }
 
         .projects {
             padding: clamp(7rem, 14vw, 14rem) var(--gutter) clamp(8rem, 16vw, 16rem);
         }
-        .section-title {
-            margin: 0 0 clamp(3rem, 7vw, 7rem);
-            color: var(--secondary);
-            font: 500 .95rem var(--body);
+        .section-title, .profile-heading {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
         }
         .project-list { display: grid; gap: clamp(3.5rem, 8vw, 8rem); }
         .project {
@@ -147,7 +187,6 @@
         .profile-section { padding: 0 var(--gutter) clamp(7rem, 13vw, 13rem); }
         .profile-block { margin-bottom: clamp(5rem, 10vw, 10rem); }
         .profile-block:last-child { margin-bottom: 0; }
-        .profile-heading { margin: 0 0 clamp(2.5rem, 5vw, 5rem); color: var(--secondary); font: 500 .95rem var(--body); }
         .profile-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(2rem, 8vw, 9rem); row-gap: clamp(2.5rem, 5vw, 5rem); }
         .profile-item h3 { margin: 0 0 .8rem; font: 600 clamp(1.2rem, 2.3vw, 2rem)/1.2 var(--display); letter-spacing: -.05em; }
         .profile-item p { max-width: 540px; margin: 0; color: var(--secondary); font-size: .98rem; line-height: 1.75; }
@@ -165,6 +204,8 @@
         .timeline-entry p + p { margin-top: .65rem; }
         .timeline-entry strong { color: var(--foreground); font-weight: 500; }
         .network-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; }
+        .section-highlight { animation: section-arrival .45s var(--ease-out) both; }
+        @keyframes section-arrival { from { opacity: .55; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
         .network-person { display: grid; justify-items: start; gap: .65rem; }
         .network-person a { font: 600 clamp(1.25rem, 2.5vw, 2.2rem) var(--display); letter-spacing: -.05em; transition: color .3s var(--ease-out); }
         .network-person a:hover { color: var(--accent); }
@@ -197,9 +238,6 @@
         footer { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-top: clamp(4rem, 9vw, 9rem); color: #696965; font-size: .75rem; }
         footer a { transition: color .3s var(--ease-out); }
         footer a:hover { color: var(--foreground); }
-        .legal-section { padding-top: 0; }
-        .legal-section .profile-grid { row-gap: 2.5rem; }
-        .legal-section .profile-item h3 { font-size: 1rem; }
 
         .cursor {
             position: fixed;
@@ -224,12 +262,18 @@
 
         @media (hover: hover) and (pointer: fine) { body, body * { cursor: none !important; } }
         @media (max-width: 700px) {
-            .topbar { padding-top: 1.4rem; }
+            body { padding-bottom: 1rem; }
+            .topbar { display: grid; grid-template-columns: 1fr auto; gap: 1rem; padding-top: 1.4rem; }
+            .topbar-nav { grid-column: 1 / -1; grid-row: 2; justify-content: space-between; gap: .65rem; font-size: .76rem; }
+            .desktop-section-link { display: none; }
+            .mobile-section-link { display: inline-flex; }
+            .language-switch { grid-column: 2; grid-row: 1; }
+            .translation-toast { bottom: max(.75rem, env(safe-area-inset-bottom)); }
             .hero { min-height: 74svh; padding: 6.5rem var(--gutter) 5rem; }
             .hero h1 { margin-bottom: 1.7rem; font-size: clamp(3.8rem, 15.5vw, 7rem); }
             .hero-role { font-size: 1rem; line-height: 1.45; }
             .projects { padding: 5rem var(--gutter) 6rem; }
-            .section-title { margin-bottom: 2.5rem; }
+            #profile, #skills { display: none; }
             .project-list { gap: 2.8rem; }
             .project, .project:nth-child(even) { grid-template-columns: 1fr; gap: .75rem; }
             .project:nth-child(even) .project-copy, .project:nth-child(even) .project-description { grid-column: 1; grid-row: auto; }
@@ -237,7 +281,6 @@
             .project-description { max-width: 540px; font-size: .92rem; line-height: 1.6; }
             .profile-section { padding-bottom: 4.5rem; }
             .profile-block { margin-bottom: 4.5rem; }
-            .profile-heading { margin-bottom: 2rem; }
             .profile-grid { row-gap: 1.8rem; }
             .profile-item h3 { margin-bottom: .55rem; font-size: 1.15rem; }
             .profile-item p { font-size: .9rem; line-height: 1.6; }
@@ -255,7 +298,6 @@
             .contact h2 { margin-bottom: 2rem; font-size: clamp(3rem, 9vw, 5rem); }
             .social-links { grid-row: auto; flex-wrap: wrap; }
             footer { margin-top: 3rem; }
-            .legal-section .profile-grid { grid-template-columns: 1fr; row-gap: 1.5rem; }
             footer { grid-column: 1; }
         }
         @media (max-width: 420px) {
@@ -266,7 +308,7 @@
         }
         @media (max-width: 360px) {
             .topbar-name { display: none; }
-            .topbar-nav { width: 100%; justify-content: space-between; gap: .45rem; font-size: .69rem; }
+            .topbar-nav { width: 100%; gap: .4rem; font-size: .69rem; }
         }
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
@@ -280,12 +322,24 @@
         <a class="topbar-name magnetic" href="#top">Filip Roessner</a>
         <nav class="topbar-nav" aria-label="Main navigation">
             <a class="magnetic" href="#projects">Projects</a>
-            <a class="magnetic" href="#profile">Profile</a>
-            <a class="magnetic" href="#skills">Skills</a>
-            <a class="magnetic" href="#network">Network</a>
-            <a class="magnetic" href="#contact">Contact</a>
+            <a class="magnetic desktop-section-link" href="#profile">Profile</a>
+            <a class="magnetic mobile-section-link" href="profile.html">Profile</a>
+            <a class="magnetic desktop-section-link" href="#skills">Skills</a>
+            <a class="magnetic mobile-section-link" href="skills.html">Skills</a>
+            <a class="magnetic desktop-section-link" href="#network">Network</a>
+            <a class="magnetic mobile-section-link" href="#network">Network</a>
+            <a class="magnetic desktop-section-link" href="#contact">Contact</a>
+            <a class="magnetic mobile-section-link" href="#contact">Contact</a>
         </nav>
+            <div class="language-switch" role="group" aria-label="Language">
+                <button type="button" data-language="en" aria-pressed="true">EN</button>
+                <button type="button" data-language="de" aria-pressed="false">DE</button>
+            </div>
     </header>
+    <div class="translation-toast" id="translation-toast" role="status" aria-live="polite" hidden>
+        <span class="translation-toast-mark" aria-hidden="true">!</span>
+        <p>AI-assisted German translation may contain inaccuracies.</p>
+    </div>
     <main id="main">
         <section class="hero" id="top" aria-labelledby="name">
             <h1 id="name"><span>Filip</span><span>Roessner</span></h1>
@@ -309,15 +363,15 @@
                 </article>
                 <article class="project">
                     <div class="project-copy">
-                        <h3><a class="project-title magnetic" href="https://github.com/Filiproessner" target="_blank" rel="noreferrer">Scalable Backend Microservices<span class="project-arrow" aria-hidden="true">↗</span></a></h3>
-                    </div>
-                    <p class="project-description">Scalable Java and Kotlin backend microservices, high-performance object-oriented architecture, clean RESTful API endpoints, and modular design developed through Computer Science coursework and personal builds. Spring Boot, OOP, and Git.</p>
-                </article>
-                <article class="project">
-                    <div class="project-copy">
                         <h3><a class="project-title magnetic" href="https://github.com/Filiproessner" target="_blank" rel="noreferrer">Hardware &amp; Automation<span class="project-arrow" aria-hidden="true">↗</span></a></h3>
                     </div>
                     <p class="project-description">Custom AutoHotkey scripts for precision input sequences and desktop workflows, paired with self-hosted Raspberry Pi system-monitoring dashboards. Linux and Dashy.</p>
+                </article>
+                <article class="project">
+                    <div class="project-copy">
+                        <h3><a class="project-title magnetic" href="https://portfolio.de.tumo.world/p/4wvgzmrxpo2kyv84181zkyn380dlj657" target="_blank" rel="noreferrer">TUMO<span class="project-arrow" aria-hidden="true">↗</span></a></h3>
+                    </div>
+                    <p class="project-description">Hands-on software projects at TUMO Berlin, exploring modern coding, system architecture, and new technologies.</p>
                 </article>
             </div>
         </section>
@@ -392,7 +446,7 @@
                 <div class="network-list">
                     <div class="network-person"><a class="magnetic" href="https://timhongphuc.de" target="_blank" rel="noreferrer">Tim Seufert (Tim Hong Phuc) ↗</a><span>Developer / Collaborator</span></div>
                     <div class="network-person"><a class="magnetic" href="https://karl-grehn.vercel.app/" target="_blank" rel="noreferrer">Karl Grehn ↗</a><span>Developer / Collaborator</span></div>
-                    <div class="network-person"><a class="magnetic" href="https://github.com/MackRichard" target="_blank" rel="noreferrer">Richard Mack ↗</a><span>Developer / Collaborator</span></div>
+                    <div class="network-person"><a class="magnetic" href="https://mackrichard.github.io/"" target="_blank" rel="noreferrer">Richard Mack ↗</a><span>Developer / Collaborator</span></div>
                 </div>
             </div>
         </section>
@@ -406,32 +460,11 @@
             </div>
             <nav class="social-links" aria-label="Profiles">
                 <a class="magnetic" href="https://github.com/Filiproessner" target="_blank" rel="noreferrer">GitHub ↗</a>
+                <a class="magnetic" href="https://www.linkedin.com/in/filip-roessner-3aa257442/" target="_blank" rel="noreferrer">LinkedIn ↗</a>
                 <a class="magnetic" href="https://www.curseforge.com/members/fipvip/projects" target="_blank" rel="noreferrer">CurseForge ↗</a>
                 <a class="magnetic" href="https://modrinth.com/user/fipvip.roessner" target="_blank" rel="noreferrer">Modrinth ↗</a>
             </nav>
-            <footer><span>© <span id="year"></span> Filip Roessner</span><a class="magnetic" href="#impressum">Impressum</a></footer>
-        </section>
-        <section class="profile-section legal-section" id="impressum" aria-labelledby="impressum-title">
-            <div class="profile-block">
-                <h2 class="profile-heading" id="impressum-title">Impressum</h2>
-                <div class="profile-grid">
-                    <div class="profile-item">
-                        
-                        <p><strong>Filip Roessner</strong></p>
-                        <p>Berlin<br>10241 Berlin, Deutschland</p>
-                    </div>
-                    <div class="profile-item">
-                        <h3>Kontakt</h3>
-                        <p>E-Mail: <a href="mailto:filip.roessner@gmail.com">filip.roessner@gmail.com</a></p>
-                        <p>Telefon: <a href="tel:+4915140362110">+4915140362110</a></p>
-                    </div>
-                    <div class="profile-item">
-                        <h3>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h3>
-                        <p>Filip Roessner</p>
-                        <p>Berlin<br>10241 Berlin</p>
-                    </div>
-                </div>
-            </div>
+            <footer><span>© <span id="year"></span> Filip Roessner</span><a class="magnetic" href="impressum.html">Impressum</a></footer>
         </section>
     </main>
 
@@ -441,10 +474,146 @@
     <script>
         (() => {
             document.getElementById('year').textContent = new Date().getFullYear();
-            const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const translations = {
+                'Skip to content': 'Zum Inhalt springen',
+                'Projects': 'Projekte',
+                'Profile': 'Profil',
+                'Skills': 'Kenntnisse',
+                'Network': 'Netzwerk',
+                'Contact': 'Kontakt',
+                'Student Developer · Systems & Backend Engineering Aspirant': 'Schüler und Entwickler · Interessiert an Systemen und Backend-Entwicklung',
+                'Berlin, Germany (CET / CEST)': 'Berlin, Deutschland (MEZ / MESZ)',
+                'Custom software and core system solutions built around': 'Individuelle Software- und Kernsystemlösungen mit',
+                'structural reliability, modular data handling, and robust backend logic': 'struktureller Zuverlässigkeit, modularer Datenverarbeitung und robuster Backend-Logik',
+                '. Java, Kotlin, and REST APIs.': '. Java, Kotlin und REST-APIs.',
+                'Minecraft Performance & Utility Mods': 'Minecraft-Performance- und Utility-Mods',
+                'and': 'und',
+                ', published for Minecraft 1.21+. Mixin-driven bytecode injection supports client/server tick optimizations and combat interaction mechanics. Fabric API, Java, Bytecode Mixins, and Mojang Mappings.': ', veröffentlicht für Minecraft 1.21+. Mixin-basierte Bytecode-Injektion ermöglicht Tick-Optimierungen für Client und Server sowie Kampfmechaniken. Fabric API, Java, Bytecode-Mixins und Mojang Mappings.',
+                'Hands-on software projects at TUMO Berlin, exploring modern coding, system architecture, and new technologies.': 'Praxisnahe Softwareprojekte bei TUMO Berlin zu modernem Coding, Systemarchitektur und innovativen Technologien.',
+                'Hardware & Automation': 'Hardware und Automatisierung',
+                'Custom AutoHotkey scripts for precision input sequences and desktop workflows, paired with self-hosted Raspberry Pi system-monitoring dashboards. Linux and Dashy.': 'Individuelle AutoHotkey-Skripte für präzise Eingabesequenzen und Desktop-Workflows, ergänzt durch selbst gehostete Systemmonitoring-Dashboards auf Raspberry Pi. Linux und Dashy.',
+                'Education & experience': 'Bildung und Erfahrung',
+                'Since 5th grade': 'Seit der 5. Klasse',
+                'MINT profile · Andreas-Gymnasium, Berlin': 'MINT-Profil · Andreas-Gymnasium, Berlin',
+                'Long-term enrollment in the Mathematics, Informatics, Natural Sciences, and Technology profile. Currently in the Oberstufe / Abitur track.': 'Langjährige Teilnahme am Profil für Mathematik, Informatik, Naturwissenschaften und Technik. Derzeit in der Oberstufe auf dem Weg zum Abitur.',
+                'Participant at the Digital Education & Creative Technologies Center, exploring software design, digital workflows, and modern technology applications.': 'Teilnahme am Zentrum für digitale Bildung und kreative Technologien mit Einblicken in Softwaredesign, digitale Workflows und moderne Technologieanwendungen.',
+                'Specialized high school internship (Schülerpraktikum) with exposure to enterprise hardware, banking and retail systems software, and infrastructure design.': 'Schülerpraktikum mit Einblicken in Unternehmenshardware, Software für Bank- und Handelssysteme sowie Infrastrukturdesign.',
+                'December 2026': 'Dezember 2026',
+                'Physics and science excursion exploring particle physics and large-scale scientific infrastructure at the European Organization for Nuclear Research.': 'Physik- und Wissenschaftsexkursion mit Einblicken in Teilchenphysik und große wissenschaftliche Infrastruktur am Europäischen Kernforschungszentrum.',
+                'Expected 2028': 'Voraussichtlich 2028',
+                'Specialized / Advanced Mathematics Track.': 'Spezialisierter / fortgeschrittener Mathematik-Schwerpunkt.',
+                'Advanced Computer Science Major for Abitur.': 'Fortgeschrittener Informatik-Leistungskurs für das Abitur.',
+                'Languages': 'Sprachen',
+                'Native': 'Muttersprache',
+                'Advanced · C1–C2. Targeting Cambridge Certification.': 'Fortgeschritten · C1–C2. Cambridge-Zertifikat angestrebt.',
+                'Intermediate · B1.': 'Mittelstufe · B1.',
+                'Conversational / Native Proficiency.': 'Gute Umgangssprache / muttersprachliches Niveau.',
+                'Technical stack': 'Technologie-Stack',
+                'Programming languages': 'Programmiersprachen',
+                '— primary backend language; advanced OOP, systems architecture, and low-level bytecode manipulation.': '— primäre Backend-Sprache; fortgeschrittene OOP, Systemarchitektur und Low-Level-Bytecode-Manipulation.',
+                '— modern JVM-based backend development.': '— moderne JVM-basierte Backend-Entwicklung.',
+                '— DOM manipulation and responsive web development.': '— DOM-Manipulation und responsives Webdesign.',
+                '— precision input automation, desktop macros, and sequence triggering.': '— präzise Eingabeautomatisierung, Desktop-Makros und Sequenzsteuerung.',
+                'Backend & web': 'Backend und Web',
+                'Modding & game engineering': 'Modding und Spieleentwicklung',
+                'Systems & developer tools': 'Systeme und Entwicklertools',
+                'Git, GitHub, Linux, Raspberry Pi, self-hosted Dashy dashboards, and network / REST integration.': 'Git, GitHub, Linux, Raspberry Pi, selbst gehostete Dashy-Dashboards und Netzwerk-/REST-Integration.',
+                'Developer network': 'Entwicklernetzwerk',
+                'Developer / Collaborator': 'Entwickler / Mitarbeiter',
+                'Let’s talk.': 'Interressiert? Kontaktieren Sie mich.',
+                'Email': 'E-Mail',
+                'Berlin, Germany (CET)': 'Berlin, Deutschland (MEZ)',
+                'Profiles': 'Profile',
+                'Impressum': 'Impressum',
+                'Spring Boot, REST APIs, React, and Tailwind CSS.': 'Spring Boot, REST-APIs, React und Tailwind CSS.',
+                'Minecraft Fabric API (1.21+), Mixins (bytecode injection), Mojang Mappings, and IntelliJ IDEA.': 'Minecraft Fabric API (1.21+), Mixins (Bytecode-Injektion), Mojang Mappings und IntelliJ IDEA.'
+            };
+            const englishTranslations = {
+                'Impressum': 'Legal notice',
+            };
+            const originalTextNodes = new WeakMap();
+            const languageButtons = document.querySelectorAll('[data-language]');
+            const languageMetadata = {
+                en: {
+                    title: 'Filip Roessner — Systems & Backend Developer',
+                    description: 'Filip Roessner is a Berlin-based student developer focused on backend systems, Java, Kotlin, and Minecraft mods.'
+                },
+                de: {
+                    title: 'Filip Roessner — System- und Backend-Entwickler',
+                    description: 'Filip Roessner ist ein Schüler und Entwickler aus Berlin mit Schwerpunkt auf Backend-Systemen, Java, Kotlin und Minecraft-Mods.'
+                }
+            };
 
-            if (!reducedMotion && window.Lenis) {
+            function setLanguage(language) {
+                const selectedLanguage = language === 'de' ? 'de' : 'en';
+                const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+                    acceptNode(node) {
+                        return node.parentElement?.tagName === 'SCRIPT' || node.parentElement?.tagName === 'STYLE'
+                            ? NodeFilter.FILTER_REJECT
+                            : NodeFilter.FILTER_ACCEPT;
+                    }
+                });
+                let node;
+                while ((node = walker.nextNode())) {
+                    if (!originalTextNodes.has(node)) originalTextNodes.set(node, node.nodeValue);
+                    const original = originalTextNodes.get(node);
+                    const source = original.trim();
+                    const translated = selectedLanguage === 'de' ? translations[source] : englishTranslations[source];
+                    const leading = original.match(/^\s*/)[0];
+                    const trailing = original.match(/\s*$/)[0];
+                    node.nodeValue = translated ? `${leading}${translated}${trailing}` : original;
+                }
+
+                document.documentElement.lang = selectedLanguage;
+                document.title = languageMetadata[selectedLanguage].title;
+                document.querySelector('.topbar-nav').setAttribute('aria-label', selectedLanguage === 'de' ? 'Hauptnavigation' : 'Main navigation');
+                document.querySelector('.social-links').setAttribute('aria-label', selectedLanguage === 'de' ? 'Profile' : 'Profiles');
+                document.querySelector('.language-switch').setAttribute('aria-label', selectedLanguage === 'de' ? 'Sprache' : 'Language');
+                document.querySelector('meta[name="description"]').content = languageMetadata[selectedLanguage].description;
+                document.querySelector('meta[property="og:title"]').content = languageMetadata[selectedLanguage].title;
+                document.querySelector('meta[property="og:description"]').content = languageMetadata[selectedLanguage].description;
+                document.querySelector('meta[name="twitter:title"]').content = languageMetadata[selectedLanguage].title;
+                document.querySelector('meta[name="twitter:description"]').content = languageMetadata[selectedLanguage].description;
+                languageButtons.forEach((button) => {
+                    button.setAttribute('aria-pressed', String(button.dataset.language === selectedLanguage));
+                });
+                try {
+                    localStorage.setItem('site-language', selectedLanguage);
+                } catch {}
+            }
+
+            const languageSwitch = document.querySelector('.language-switch');
+            const translationToast = document.getElementById('translation-toast');
+            let translationToastTimeout;
+            function selectLanguage(language) {
+                const wasEnglish = document.documentElement.lang !== 'de';
+                setLanguage(language);
+                if (language !== 'de' || !wasEnglish) return;
+
+                window.clearTimeout(translationToastTimeout);
+                translationToast.hidden = false;
+                requestAnimationFrame(() => translationToast.classList.add('is-visible'));
+                translationToastTimeout = window.setTimeout(() => {
+                    translationToast.classList.remove('is-visible');
+                    window.setTimeout(() => { translationToast.hidden = true; }, 350);
+                }, 3200);
+            }
+            languageSwitch.addEventListener('click', (event) => {
+                selectLanguage(document.documentElement.lang === 'de' ? 'en' : 'de');
+            });
+            let savedLanguage = 'en';
+            try {
+                savedLanguage = localStorage.getItem('site-language') || 'en';
+            } catch {}
+            if (savedLanguage === 'de') setLanguage('de');
+
+            const mobileNavigation = window.matchMedia('(max-width: 700px)');
+            const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            let smoothScroller = null;
+
+            if (!reducedMotion && !mobileNavigation.matches && window.Lenis) {
                 const lenis = new Lenis({ duration: 1.15, smoothWheel: true, wheelMultiplier: .9 });
+                smoothScroller = lenis;
                 if (window.gsap && window.ScrollTrigger) {
                     gsap.registerPlugin(ScrollTrigger);
                     lenis.on('scroll', ScrollTrigger.update);
@@ -454,6 +623,46 @@
                     const raf = (time) => { lenis.raf(time); requestAnimationFrame(raf); };
                     requestAnimationFrame(raf);
                 }
+            }
+
+            function scrollToSection(target) {
+                if (!mobileNavigation.matches) {
+                    if (smoothScroller) smoothScroller.scrollTo(target);
+                    else target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    return;
+                }
+
+                const scroller = document.scrollingElement;
+                scroller.scrollTop = Math.min(
+                    scroller.scrollTop + target.getBoundingClientRect().top,
+                    scroller.scrollHeight - window.innerHeight
+                );
+                target.classList.remove('section-highlight');
+                void target.offsetWidth;
+                target.classList.add('section-highlight');
+                window.setTimeout(() => target.classList.remove('section-highlight'), 500);
+            }
+
+            document.querySelector('.topbar-nav').addEventListener('click', (event) => {
+                const link = event.target.closest('a[href^="#"]');
+                if (!link || reducedMotion) return;
+                const target = document.querySelector(link.getAttribute('href'));
+                if (!target) return;
+                event.preventDefault();
+                scrollToSection(target);
+                if (window.location.hash !== link.getAttribute('href')) {
+                    window.history.pushState(null, '', link.getAttribute('href'));
+                }
+            });
+
+            if (!reducedMotion) {
+                document.querySelectorAll('.mobile-section-link[href$=".html"]').forEach((link) => {
+                    link.addEventListener('click', (event) => {
+                        event.preventDefault();
+                        document.body.classList.add('is-leaving');
+                        window.setTimeout(() => window.location.assign(link.href), 180);
+                    });
+                });
             }
 
             if (!reducedMotion && window.gsap && window.ScrollTrigger) {
@@ -466,7 +675,7 @@
                     ease: 'power4.out',
                     delay: .1
                 });
-                gsap.utils.toArray('.section-title, .project, .contact h2, .contact-main, .social-links').forEach((element) => {
+                gsap.utils.toArray('.project, .contact h2, .contact-main, .social-links').forEach((element) => {
                     gsap.from(element, {
                         y: 28,
                         opacity: 0,

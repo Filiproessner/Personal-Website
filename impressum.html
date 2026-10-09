@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0c0c0e">
+    <meta name="description" content="Legal notice and contact information for Filip Roessner.">
+    <title>Legal notice — Filip Roessner</title>
+    <link rel="icon" type="image/jpeg" href="icons/favicon.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            color-scheme: dark;
+            --background: #0c0c0e;
+            --foreground: #f5f5f2;
+            --secondary: #a2a29e;
+            --accent: #ff4c24;
+            --display: 'Manrope', sans-serif;
+            --body: 'DM Sans', sans-serif;
+            --gutter: clamp(1.25rem, 7vw, 8rem);
+        }
+        *, *::before, *::after { box-sizing: border-box; }
+        body { min-height: 100svh; margin: 0; background: var(--background); color: var(--foreground); font-family: var(--body); -webkit-font-smoothing: antialiased; }
+        a { color: inherit; text-decoration: none; }
+        a:hover { color: var(--accent); }
+        :focus-visible { outline: 1px solid var(--accent); outline-offset: 5px; }
+        .topbar { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; padding: 2rem var(--gutter); }
+        .back-link { color: var(--secondary); font-size: .9rem; transition: color .2s ease; }
+        .language-switch { display: flex; gap: .25rem; padding: .2rem; border: 1px solid rgba(245,245,242,.18); border-radius: 999px; cursor: pointer; }
+        .language-switch button { min-width: 2rem; padding: .3rem .4rem; border: 0; border-radius: 999px; background: transparent; color: var(--secondary); font: 600 .7rem var(--body); cursor: pointer; transition: background-color .24s ease, color .24s ease, transform .24s ease; }
+        .language-switch button[aria-pressed="true"] { transform: scale(1.06); background: var(--foreground); color: var(--background); }
+        main { width: min(100%, 1100px); min-height: calc(100svh - 7rem); margin: 0 auto; padding: clamp(4rem, 10vw, 8rem) var(--gutter) 6rem; }
+        h1 { margin: 0 0 clamp(3rem, 7vw, 6rem); font: 700 clamp(3.5rem, 10vw, 8rem)/.95 var(--display); letter-spacing: -.07em; }
+        .legal-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(2rem, 7vw, 6rem); }
+        .legal-block { padding-top: 1.25rem; border-top: 1px solid rgba(245,245,242,.2); }
+        .legal-block h2 { margin: 0 0 1.5rem; font: 600 1rem/1.4 var(--display); }
+        .legal-block p { margin: 0 0 .75rem; color: var(--secondary); font-size: .95rem; line-height: 1.7; }
+        .legal-block strong { color: var(--foreground); font-weight: 500; }
+        footer { display: flex; justify-content: space-between; gap: 1rem; margin-top: clamp(5rem, 10vw, 9rem); padding-top: 1.2rem; border-top: 1px solid rgba(245,245,242,.12); color: #696965; font-size: .78rem; }
+        @media (max-width: 600px) {
+            .topbar { padding-top: 1.4rem; }
+            main { padding-top: 4rem; }
+            .legal-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+            footer { flex-wrap: wrap; }
+        }
+    </style>
+</head>
+<body>
+    <header class="topbar">
+        <a class="back-link" href="index.html" data-en="Back to portfolio" data-de="Zurück zum Portfolio">Back to portfolio</a>
+        <div class="language-switch" role="group" aria-label="Language">
+            <button type="button" data-language="en" aria-pressed="true">EN</button>
+            <button type="button" data-language="de" aria-pressed="false">DE</button>
+        </div>
+    </header>
+    <main>
+        <h1 data-en="Legal notice" data-de="Impressum">Legal notice</h1>
+        <div class="legal-grid">
+            <section class="legal-block" aria-labelledby="contact-title">
+                <h2 id="contact-title" data-en="Contact" data-de="Kontakt">Contact</h2>
+                <p><strong>Filip Roessner</strong></p>
+                <p>10241 Berlin, <span data-en="Germany" data-de="Deutschland">Germany</span></p>
+                <p><span data-en="Email:" data-de="E-Mail:">Email:</span> <a href="mailto:filip.roessner@gmail.com">filip.roessner@gmail.com</a></p>
+                <p><span data-en="Phone:" data-de="Telefon:">Phone:</span> <a href="tel:+4915140362110">+4915140362110</a></p>
+            </section>
+            <section class="legal-block" aria-labelledby="responsibility-title">
+                <h2 id="responsibility-title" data-en="Responsible for content under Section 18 (2) of the German Interstate Media Treaty" data-de="Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV">Responsible for content under Section 18 (2) of the German Interstate Media Treaty</h2>
+                <p><strong>Filip Roessner</strong></p>
+                <p>10241 Berlin</p>
+            </section>
+        </div>
+        <footer>
+            <span>© <span id="year"></span> Filip Roessner</span>
+            <a href="index.html" data-en="Back to portfolio" data-de="Zurück zum Portfolio">Back to portfolio</a>
+        </footer>
+    </main>
+    <script>
+        (() => {
+            const languageButtons = document.querySelectorAll('[data-language]');
+            const languageElements = document.querySelectorAll('[data-en][data-de]');
+            const responsibilityHeading = document.getElementById('responsibility-title');
+            document.getElementById('year').textContent = new Date().getFullYear();
+
+            function setLanguage(language) {
+                const selectedLanguage = language === 'de' ? 'de' : 'en';
+                document.documentElement.lang = selectedLanguage;
+                document.title = selectedLanguage === 'de' ? 'Impressum — Filip Roessner' : 'Legal notice — Filip Roessner';
+                languageElements.forEach((element) => {
+                    element.textContent = element.dataset[selectedLanguage];
+                });
+                responsibilityHeading.setAttribute('aria-label', responsibilityHeading.textContent);
+                languageButtons.forEach((button) => {
+                    button.setAttribute('aria-pressed', String(button.dataset.language === selectedLanguage));
+                });
+                try {
+                    localStorage.setItem('site-language', selectedLanguage);
+                } catch {}
+            }
+
+            document.querySelector('.language-switch').addEventListener('click', (event) => {
+                setLanguage(document.documentElement.lang === 'de' ? 'en' : 'de');
+            });
+            let savedLanguage = 'en';
+            try {
+                savedLanguage = localStorage.getItem('site-language') || 'en';
+            } catch {}
+            setLanguage(savedLanguage);
+        })();
+    </script>
+</body>
+</html>
